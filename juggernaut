@@ -695,16 +695,8 @@ end
 end
 
 	Damagefunc = function(Part, hit, minim, maxim, knockback, Type, Property, Delay, HitSound, HitPitch)
-	
-	if hit.Parent == nil then
-		return 
-	end
-	local h = hit.Parent:FindFirstChild("Humanoid")
-	for _,v in pairs(hit.Parent:children()) do
-		if v:IsA("Humanoid") then
-			h = v
-		end
-	end
+
+
 	if h ~= nil and hit.Parent.Name ~= Character.Name and hit.Parent:FindFirstChild("Torso") ~= nil then
 		if hit.Parent:findFirstChild("DebounceHit") ~= nil and hit.Parent.DebounceHit.Value == true then
 			return 
@@ -816,17 +808,6 @@ end
 	MagniDamage = function(Part, magni, mindam, maxdam, knock, Type)
 	
 	for _,c in pairs(workspace:children()) do
-		local hum = c:findFirstChild("Humanoid")
-		if hum ~= nil then
-			local head = c:findFirstChild("Torso")
-			if head ~= nil then
-				local targ = head.Position - Part.Position
-				local mag = targ.magnitude
-				if mag <= magni and c.Name ~= Player.Name then
-					Damagefunc(head, head, mindam, maxdam, knock, Type, RootPart, 0.1, "http://www.roblox.com/asset/?id=231917784", 1)
-				end
-			end
-		end
 	end
 end
 
@@ -927,7 +908,7 @@ end
 	attack = true
 	local con = RightArm.Touched:connect(function(hit)
 		
-		Damagefunc(RightArm, hit, 10, 18, math.random(1, 5), "Normal", RootPart, 0.2, "rbxassetid://191395549", 1)
+	
 	end
 )
 	for i = 0, 1, 0.1 do
@@ -952,7 +933,6 @@ end
 	attack = true
 	local con = LeftArm.Touched:connect(function(hit)
 		
-		Damagefunc(LeftArm, hit, 10, 18, math.random(1, 5), "Normal", RootPart, 0.2, "rbxassetid://191395549", 1)
 	end
 )
 	for i = 0, 1, 0.1 do
@@ -977,7 +957,6 @@ end
 	attack = true
 	local con = RightArm.Touched:connect(function(hit)
 		
-		Damagefunc(RightArm, hit, 10, 18, math.random(1, 5), "Normal", RootPart, 0.2, "rbxassetid://191395549", 1)
 	end
 )
 	for i = 0, 1, 0.1 do
@@ -1002,7 +981,7 @@ end
 	attack = true
 	local con = RightArm.Touched:connect(function(hit)
 		
-		Damagefunc(RightArm, hit, 10, 18, math.random(1, 5), "Knockdown", RootPart, 0.2, "rbxassetid://231917806", 2)
+
 	end
 )
 	for i = 0, 1, 0.075 do
@@ -1282,20 +1261,19 @@ end
 							CFuncs.Sound.Create("http://www.roblox.com/asset/?id=233856079", refpart, 1, 2)
 							Effects.Block.Create(BrickColor.new("Really red"), refpart.CFrame, 1, 1, 1, 10, 10, 10, 0.07)
 							Effects.Ring.Create(BrickColor.new("Really red"), refpart.CFrame, 1, 9999, 1, 1, 0, 1, 0.02)
-							MagniDamage(refpart, 15, 20, 30, 5, "Knockdown")
 						else
 							if Type == "Poison" then
 								if hit.Name == "Head" then
 									Effects.Block.Create(BrickColor.new("Bright violet"), refpart.CFrame, 1, 1, 1, 1, 1, 1, 0.07)
-									MagniDamage(refpart, 5, 18 * multiply, 20 * multiply, 0, "Curse")
+
 								else
 									Effects.Sphere.Create(BrickColor.new("Bright violet"), refpart.CFrame, 1, 1, 1, 1, 1, 1, 0.07)
-									MagniDamage(refpart, 5, 3 * multiply, 3 * multiply, 0, "Curse")
+
 								end
 							else
 								if Type == "Stun" then
 									Effects.Block.Create(BrickColor.new("White"), refpart.CFrame, 1, 1, 1, 1, 1, 1, 0.07)
-									MagniDamage(refpart, 5, 10 * multiply, 10 * multiply, 0, "Freeze")
+
 								end
 							end
 						end
@@ -1742,7 +1720,6 @@ end
 								ref = CFuncs.Part.Create(EffectModel, "Neon", 0, 1, BrickColor.new("Really red"), "Reference", Vector3.new())
 								ref.Anchored = true
 								ref.CFrame = CFrame.new(pos)
-								MagniDamage(ref, 10, 3, 8, 0, "Normal")
 								Effects.Sphere.Create(BrickColor.new("Really red"), CFrame.new(pos), 5, 5, 5, 1, 1, 1, 0.07)
 								CFuncs.Sound.Create("rbxassetid://300916057", ref, 1, 2)
 								game:GetService("Debris"):AddItem(ref, 1)
@@ -1767,7 +1744,7 @@ end
 									ref = CFuncs.Part.Create(EffectModel, "Neon", 0, 1, BrickColor.new("Really red"), "Reference", Vector3.new())
 									ref.Anchored = true
 									ref.CFrame = CFrame.new(pos)
-									MagniDamage(ref, 10, 10, 18, 0, "Normal")
+
 									Effects.Sphere.Create(BrickColor.new("Really red"), CFrame.new(pos), 25, 25, 25, 5, 5, 5, 0.1)
 									Effects.Sphere.Create(BrickColor.new("Really red"), CFrame.new(pos), 10, 10, 10, 15, 15, 15, 0.08)
 									CFuncs.Sound.Create("rbxassetid://300916057", ref, 1, 1.5)
