@@ -1,38 +1,3 @@
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ]]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 --[[
-
-
-                                                                                       
-                         _/_/_/              _/                      _/                                _/   
-                        _/    _/    _/_/    _/  _/    _/    _/_/_/        _/_/    _/_/_/      _/_/_/  _/    
-                       _/    _/  _/_/_/_/  _/  _/    _/  _/_/      _/  _/    _/  _/    _/  _/    _/  _/     
-                      _/    _/  _/        _/  _/    _/      _/_/  _/  _/    _/  _/    _/  _/    _/  _/      
-                     _/_/_/      _/_/_/  _/    _/_/_/  _/_/_/    _/    _/_/    _/    _/    _/_/_/  _/       
-                                                                                       
-                                                                                                                                                                                                                         
-                                             _       _______ _       _______ 
-                                            ( (    /(  ____ | \    /(  ___  )
-                                            |  \  ( | (    \|  \  / | (   ) |
-                                            |   \ | | (__   |  (_/ /| |   | |
-                                            | (\ \) |  __)  |   _ ( | |   | |
-                                            | | \   | (     |  ( \ \| |   | |
-                                            | )  \  | (____/|  /  \ | (___) |
-                                            |/    )_(_______|_/    \(_______)
-                                 
-                                      
-                                      
-       
-                           Â© 2020 - 2023 TigerX. Feel free to get your chills up over cringeness
-
-                                                 Made by SUPER_TIGERPRO
-                                                 Converted by Epic
- 
- 
- 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-* Delusional Banisher [well it supposed to be "Delusional Neko" but ur not neko so...]
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ]]
-
 local char = game:GetService("Players").LocalPlayer.Character
 local script = game:GetObjects("rbxassetid://10341299479")[1]
 script.Parent = game:GetService("Players").LocalPlayer.Character
@@ -800,7 +765,7 @@ local HUD_ = function()
 	DLNK.Size = UDim2.new(0.430943042, 0, -0.0175438598, 50)
 	DLNK.ZIndex = 100
 	DLNK.Font = Enum.Font.DenkOne
-	DLNK.Text = "Delusional Banisher"
+	DLNK.Text = "Delusional Neko"
 	DLNK.TextColor3 = Color3.fromRGB(255, 0, 127)
 	DLNK.TextSize = 40.000
 	DLNK.TextStrokeTransparency = 0.000
@@ -1231,7 +1196,7 @@ local lmao_ = function()
 	DLNK.Size = UDim2.new(0, 200, 0, 50)
 	DLNK.ZIndex = 100
 	DLNK.Font = Enum.Font.PermanentMarker
-	DLNK.Text = "Delusional Banisher"
+	DLNK.Text = "Delusional Neko"
 	DLNK.TextColor3 = Color3.fromRGB(255, 0, 0)
 	DLNK.TextScaled = true
 	DLNK.TextSize = 100.000
@@ -3580,7 +3545,7 @@ NameMode.TextScaled = true
 NameMode.BorderSizePixel = 0
 NameMode.Font = "DenkOne"
 NameMode.TextSize = 35
-NameMode.Text = "Delusional Banisher"
+NameMode.Text = "Delusional Neko"
 NameMode.TextStrokeTransparency = 0
 NameMode.Size = UDim2.new(1,0,0.5,0)
 NameMode.Parent = NameModeHolder
@@ -4987,84 +4952,7 @@ end
 
 --= // Lightings/Visuals \\ =--
 
-local VISUALS = Serv("Lighting")
-local VISUALSSx = Serv("Lighting")
-local Bloom = Instance.new("BloomEffect")
-Bloom.Enabled = true
-Bloom.Intensity = 1
-Bloom.Size = 24
-Bloom.Threshold = 2
-local CCR = Instance.new("ColorCorrectionEffect")
-CCR.Brightness = 0
-CCR.Contrast = 0
-CCR.Enabled = true
-CCR.Saturation = 0
-CCR.TintColor = Color3.new(1,1,1)
-Bloom.Parent = VISUALS
-CCR.Parent = VISUALS
-local Skybox = Instance.new("Sky",Serv("Lighting"))
-Skybox.Name = "EH@YD@8"
-Skybox.CelestialBodiesShown = true
-Skybox.MoonAngularSize = 11
-Skybox.MoonTextureId = "rbxasset://6336108490"
-Skybox.SkyboxBk = "rbxassetid://591058823"
-Skybox.SkyboxDn = "rbxassetid://591059876"
-Skybox.SkyboxFt = "rbxassetid://591058104"
-Skybox.SkyboxLf = "rbxassetid://591057861"
-Skybox.SkyboxRt = "rbxassetid://591057625"
-Skybox.SkyboxUp = "rbxassetid://591059642"
-Skybox.StarCount = 3000
-Skybox.SunAngularSize = 21
-Skybox.SunTextureId = "rbxasset://6336108490"
-coroutine.resume(coroutine.create(function()
-	while true do
-		Swait()
-		if LightningM == true then
-			Bloom.Intensity = 0 + sick.PlaybackLoudness/500
-			VISUALSSx.ExposureCompensation = 0 + sick.PlaybackLoudness/125
-			VISUALS.EnvironmentDiffuseScale = 0 + sick.PlaybackLoudness/100
-			Serv("Workspace").CurrentCamera.FieldOfView = 70 - sick.PlaybackLoudness/95
-			CCR.Contrast= 0.1 + sick.PlaybackLoudness/1000
-			CCR.Enabled = true
-		else
-			if AudioId == 1847706469 and LightningM == false then
-				VISUALS.FogColor = aaaa
-				VISUALS.Ambient = aaaa
-				VISUALS.OutdoorAmbient = aaaa
-				VISUALS.TimeOfDay = 0
-				Bloom.Intensity = 0 + sick.PlaybackLoudness/500
-				VISUALSSx.ExposureCompensation = 0 + sick.PlaybackLoudness/125
-				VISUALSSx.FogEnd = math.clamp(sick.PlaybackLoudness,50,1000)
-				VISUALS.EnvironmentDiffuseScale = 0 + sick.PlaybackLoudness/100
-				Serv("Workspace").CurrentCamera.FieldOfView = 70 - sick.PlaybackLoudness/95
-				CCR.Contrast= 0.1 + sick.PlaybackLoudness/1000
-				CCR.Enabled = true
-			elseif AudioId == 2 and LightningM == false then
-				Serv("Lighting").Ambient = Color3.fromRGB(138,138,138)
-				Serv("Lighting").OutdoorAmbient = Color3.fromRGB(128,128,128)
-				Serv("Lighting").FogColor = Color3.fromRGB(192,192,192)
-				Serv("Lighting").TimeOfDay = "22:00:00"
-				Serv("Lighting").ExposureCompensation = 0
-				Serv("Lighting").FogEnd = 100000
-				Serv("Lighting").Brightness = 0
-				coroutine.resume(coroutine.create(function()
-					Serv("Workspace").CurrentCamera.FieldOfView = 70 - sickb.PlaybackLoudness/95
-				end))
-				CCR.Enabled = false
-			else			
-				Serv("Lighting").Ambient = Color3.fromRGB(138,138,138)
-				Serv("Lighting").OutdoorAmbient = Color3.fromRGB(128,128,128)
-				Serv("Lighting").FogColor = Color3.fromRGB(192,192,192)
-				Serv("Lighting").TimeOfDay = "22:00:00"
-				Serv("Lighting").ExposureCompensation = 0
-				Serv("Lighting").FogEnd = 100000
-				Serv("Lighting").Brightness = 0
-				Serv("Workspace").CurrentCamera.FieldOfView = 70 - sick.PlaybackLoudness/95
-				CCR.Enabled = false
-			end
-		end
-	end
-end))
+
 
 --= // Premode for Fight through Adversity \\ =--
 
@@ -5772,7 +5660,7 @@ function modeswitchhud()
 					wait(0.7)
 					SMEFF()
 					Taunt = "Fight through Adversity"
-					NameMode.Text = "Delusional Banisher"
+					NameMode.Text = "Delusional Neko"
 					--Event:FireServer("SMEFF")
 					NextMusic = 9038254260
 					DaGuiZ:Destroy()
@@ -6017,7 +5905,7 @@ if lplr == Player then
 					for i = 1,20 do
 						wait()
 						HUD.Info.TextTransparency = HUD.Info.TextTransparency - 0.1
-						HUD.Info.Text = "Delusional Banisher"
+						HUD.Info.Text = "Delusional Neko"
 					end
 					wait(2)
 					for i = 1,25 do
@@ -6038,7 +5926,7 @@ if lplr == Player then
 					for i = 1,40 do
 						wait()
 						HUD.Info.TextTransparency = HUD.Info.TextTransparency - 0.1
-						HUD.Info.Text = "Created/Made By SUPER_TIGERPRO"
+						HUD.Info.Text = "grr shit fuck u fat ass"
 					end
 					wait(2)
 					for i = 1,45 do
@@ -6049,7 +5937,7 @@ if lplr == Player then
 					for i = 1,50 do
 						wait()
 						HUD.Info.TextTransparency = HUD.Info.TextTransparency - 0.1
-						HUD.Info.Text = "Converted/Edited By Epiconister"
+						HUD.Info.Text = "convert by pepfre"
 					end
 					wait(2)
 					for i = 1,55 do
@@ -6059,7 +5947,7 @@ if lplr == Player then
 					for i = 1,60 do
 						wait()
 						HUD.Info.TextTransparency = HUD.Info.TextTransparency - 0.1
-						HUD.Info.Text = "Fuck you pepfre"
+						HUD.Info.Text = "Fuck you pepfre i fucking hate you"
 					end
 					wait(2)
 					for i = 1,65 do
@@ -7328,12 +7216,12 @@ local Welds = {
 
 --= // hAsbeEnlOaDed!32414 \\ =--
 
-Serv("StarterGui"):SetCore("ChatMakeSystemMessage", {Text = "Delusional Banisher (DLNK F) "..SCRIPTVER.." By SUPER_TIGERPRO Has Been Loaded!"})
+Serv("StarterGui"):SetCore("ChatMakeSystemMessage", {Text = "Delusional Neko (DLNK F) "..SCRIPTVER.." By SUPER_TIGERPRO Has Been Loaded!"})
 local BruuuuhhChat
 coroutine.resume(coroutine.create(function()
 	for i,v in pairs(lplr:FindFirstChildWhichIsA("PlayerGui"):WaitForChild("Chat"):GetDescendants()) do
 		if v:IsA('TextLabel') then
-			if v.Text == "Delusional Banisher (DLNK F) "..SCRIPTVER.." By SUPER_TIGERPRO Has Been Loaded!" then
+			if v.Text == "Delusional Neko (DLNK F) "..SCRIPTVER.." By SUPER_TIGERPRO Has Been Loaded!" then
 				BruuuuhhChat = v
 				break
 			end
@@ -8181,17 +8069,7 @@ Serv("RunService").Heartbeat:Connect(function()
 
 					do
 
-						if LightningM == true then
-							Serv("Lighting").Ambient = Color3.fromRGB(138,138,138)
-							Serv("Lighting").OutdoorAmbient = Color3.fromRGB(128,128,128)
-							Serv("Lighting").FogColor = Color3.fromRGB(192,192,192)
-							Serv("Lighting").TimeOfDay = "22:00:00"
-							Serv("Lighting").ExposureCompensation = 0
-							Serv("Lighting").FogEnd = 100000
-							Serv("Lighting").Brightness = 0
-							Serv("Workspace").CurrentCamera.FieldOfView = 70 - sick.PlaybackLoudness/95
-							CCR.Enabled = false
-						end
+
 
 						local raypart,raypos,normal = LSRay(CFrame.new(RootPart.Position)*LSCFrameRand(0,0,0,360,0,0)*CFrame.new(0,10,math.random(5,40)).Position,Vector3.new(0,-1000,0),{Player,LSWAEFFShapes})
 						if raypart then
