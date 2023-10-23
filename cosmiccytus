@@ -1,0 +1,1871 @@
+wait(0.2)
+plr = game.Players.LocalPlayer
+chr = plr.Character
+Head = chr.Head
+Root = chr.HumanoidRootPart
+Torso = chr.Torso
+RArm = chr["Right Arm"]
+LArm = chr["Left Arm"]
+RLeg = chr["Right Leg"]
+LLeg = chr["Left Leg"]
+RJ = Root.RootJoint
+Neck = Torso.Neck
+LS = Torso["Left Shoulder"]
+LH = Torso["Left Hip"]
+RS = Torso["Right Shoulder"]
+RH = Torso["Right Hip"]
+hum = chr:FindFirstChildOfClass("Humanoid")
+mouse = plr:GetMouse()
+local script = Instance.new("Script",chr)
+Pose = "Idle"
+attack = false
+combo = 1
+sin = 0
+cha = 1
+ea = false
+coloriz = 1
+color = "Institutional white"
+color2 = "Really black"
+FELOADLIBRARY = {}
+loadstring(game:GetObjects("rbxassetid://5209815302")[1].Source)()
+local Create= FELOADLIBRARY.Create
+local create = Create
+pcall(game.Destroy,chr.Animate)
+pcall(game.Destroy,hum.Animator)
+function clerp(a, b, t)
+	return a:lerp(b, t)
+end
+local newMotor = function(p0, p1, c0, c1)
+	local w = Instance.new("Motor", p0)
+	w.Part0 = p0
+	w.Part1 = p1
+	w.C0 = c0
+	w.C1 = c1
+	return w
+end
+RJ.C0, RJ.C1 = CFrame.new(0, 0, 0), CFrame.new(0, 0, 0)
+Neck.C0, Neck.C1 = CFrame.new(0, 1.5, 0), CFrame.new(0, 0, 0)
+local RS = newMotor(Torso, RArm, CFrame.new(1.5, 0, 0), CFrame.new(0, 0, 0))
+local LS = newMotor(Torso, LArm, CFrame.new(-1.5, 0, 0), CFrame.new(0, 0, 0))
+local RH = newMotor(Torso, RLeg, CFrame.new(0.5, -2, 0), CFrame.new(0, 0, 0))
+local LH = newMotor(Torso, LLeg, CFrame.new(-0.5, -2, 0), CFrame.new(0, 0, 0))
+function NoOutline(Part)
+	Part.TopSurface, Part.BottomSurface, Part.LeftSurface, Part.RightSurface, Part.FrontSurface, Part.BackSurface = 10, 10, 10, 10, 10, 10
+end
+function rayCast(Position, Direction, Range, Ignore)
+	return game:service("Workspace"):FindPartOnRay(Ray.new(Position, Direction.unit * (Range or 999.999)), Ignore)
+end
+ArtificialHB = create("BindableEvent")({Parent = script, Name = "Heartbeat"})
+script:WaitForChild("Heartbeat")
+frame = 0.016666666666666666
+tf = 0
+allowframeloss = false
+tossremainder = false
+lastframe = tick()
+script.Heartbeat:Fire()
+game:GetService("RunService").Heartbeat:connect(function(s, p)
+	tf = tf + s
+	if tf >= frame then
+		if allowframeloss then
+			script.Heartbeat:Fire()
+			lastframe = tick()
+		else
+			for i = 1, math.floor(tf / frame) do
+				script.Heartbeat:Fire()
+			end
+			lastframe = tick()
+		end
+		if tossremainder then
+			tf = 0
+		else
+			tf = tf - frame * math.floor(tf / frame)
+		end
+	end
+end)
+function swait(num)
+	if num == 0 or num == nil then
+		ArtificialHB.Event:wait()
+	else
+		for i = 0, num do
+			ArtificialHB.Event:wait()
+		end
+	end
+end
+function parts(Par, name, size, color, mat, ref, tra)
+	local part = create("Part")({
+		Parent = Par,
+		Name = name,
+		Size = size,
+		CanCollide = false,
+		Anchored = false,
+		BrickColor = BrickColor.new(color),
+		Material = mat,
+		Reflectance = ref,
+		Transparency = tra
+	})
+	NoOutline(part)
+	part:BreakJoints()
+	return part
+end
+function meshs(Par, name, scale, mtype, id)
+	local mesh = create("SpecialMesh")({
+		Parent = Par,
+		Name = name,
+		Scale = scale,
+		MeshType = mtype
+	})
+	if id ~= "" then
+		mesh.MeshId = "rbxassetid://" .. id
+	end
+	return meshs
+end
+function welds(Par, name, p0, p1, c0, c1)
+	local weld = create("Weld")({
+		Parent = Par,
+		Name = name,
+		Part0 = p0,
+		Part1 = p1,
+		C0 = c0,
+		C1 = c1
+	})
+	return weld
+end
+function sounds(Par, id, vol, pit)
+	local sound = create("Sound")({
+		Parent = Par,
+		SoundId = "rbxassetid://" .. id,
+		Volume = vol,
+		PlaybackSpeed = pit,
+		MaxDistance = 66666666
+	})
+	sound:Play()
+	game:GetService("Debris"):AddItem(sound, 20)
+	return sound
+end
+m = create("Model")({Parent = chr, Name = "WModel"})
+e = create("Model")({Parent = chr, Name = "Effect"})
+local soundasd = create("Sound")({
+	Parent = chr,
+	SoundId = "rbxassetid://1347011178",
+	Volume = 1,
+	PlaybackSpeed = 1,
+	Looped = true
+})
+soundasd:Play()
+sp1 = create("NumberValue")({
+	Name = "sp1",
+	Value = 0,
+	Parent = chr
+})
+sp2 = create("NumberValue")({
+	Name = "sp2",
+	Value = 0,
+	Parent = chr
+})
+Speedz = create("NumberValue")({
+	Name = "Speed",
+	Value = 16,
+	Parent = chr
+})
+Jumpz = create("NumberValue")({
+	Name = "Jump",
+	Value = 50,
+	Parent = chr
+})
+main = parts(m, "main", Vector3.new(0.1, 0.1, 0.1), color, Enum.Material.Neon, 0, 1)
+mainWeld = welds(main, "mainWeld", Root, main, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+Cube = parts(m, "Cube", Vector3.new(1.20000005, 1.20000005, 1.20000005), color, Enum.Material.Neon, 0, 0)
+CubeWeld = welds(Cube, "CubeWeld", main, Cube, CFrame.new(0, 0, 7, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+meshs(Cube, "Mesh", Vector3.new(0.99000001, 0.99000001, 0.99000001), Enum.MeshType.Brick, "")
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.549995422, -4.76837158E-7, 0.550001144, 1, 0, 1.39925692E-6, -1.39925714E-6, -1.13686838E-13, 0.99999994, 0, -1, 0))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.550008774, -4.76837158E-7, 0.550001144, 1, 0, 1.39925692E-6, -1.39925714E-6, -1.13686838E-13, 0.99999994, 0, -1, 0))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.549995422, -4.76837158E-7, -0.550002098, 1, 0, 1.39925692E-6, -1.39925714E-6, -1.13686838E-13, 0.99999994, 0, -1, 0))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.550008774, -4.76837158E-7, -0.550002098, 1, 0, 1.39925692E-6, -1.39925714E-6, -1.13686838E-13, 0.99999994, 0, -1, 0))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.550008774, 0, 0.550001621, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.550008774, -1.90734863E-6, -0.549999714, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.549995422, -3.81469727E-6, -0.550000668, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.549998283, -1.90734863E-6, 0.550001621, 0, 1, 0, -1, 0, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.549998283, -3.81469727E-6, -0.549999714, 0, 1, 0, -1, 0, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.550005913, -5.7220459E-6, -0.550000668, 0, 1, 0, -1, 0, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.549998283, -3.81469727E-6, 0.549999237, 0, 1, 0, -1, 0, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.550005913, -5.7220459E-6, 0.549998283, 0, 1, 0, -1, 0, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.54999733, 7.62939453E-6, 0.549999714, -1, 0, 0, 0, -1, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(0.0999999866, 1.20000005, 0.099999927), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.550004959, 5.7220459E-6, 0.54999876, -1, 0, 0, 0, -1, 0, 0, 0, 1))
+Part = parts(m, "Part", Vector3.new(1.20000017, 0.200000003, 1.4000001), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-5.7220459E-6, 0, 0, 1, 0, 0, 0, -0.707106829, -0.707106829, 0, 0.707106829, -0.707106829))
+Part = parts(m, "Part", Vector3.new(1.20000017, 0.200000003, 1.4000001), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-5.7220459E-6, 0, 0, 1, 0, 0, 0, 0.707106829, -0.707106829, 0, 0.707106829, 0.707106829))
+Part = parts(m, "Part", Vector3.new(1.20000017, 0.200000003, 1.4000001), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0, -1.90734863E-6, 5.7220459E-6, 0, 1, 0, 0.707106352, 0, -0.707107365, -0.707107365, 0, -0.707106352))
+Part = parts(m, "Part", Vector3.new(1.20000017, 0.200000003, 1.4000001), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0, 5.7220459E-6, 5.7220459E-6, 0, 1, 0, -0.707106352, 0, -0.707107365, -0.707107365, 0, 0.707106352))
+Part = parts(m, "Part", Vector3.new(1.20000017, 0.200000003, 1.4000001), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-4.76837158E-7, -3.81469727E-6, 5.7220459E-6, 0, 0, 1, 0.707106352, 0.707107365, 0, -0.707107365, 0.707106352, 0))
+Part = parts(m, "Part", Vector3.new(1.20000017, 0.200000003, 1.4000001), color2, Enum.Material.SmoothPlastic, 0, 0)
+PartWeld = welds(Part, "PartWeld", Cube, Part, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-4.76837158E-7, 3.81469727E-6, 5.7220459E-6, 0, 0, 1, -0.707106352, 0.707107365, 0, -0.707107365, -0.707106352, 0))
+local an = parts(m, "an", Vector3.new(0.2, 0.2, 0.2), "Institutional white", Enum.Material.SmoothPlastic, 0, 1)
+aa = create("BodyVelocity")({
+	Parent = an,
+	MaxForce = Vector3.new(math.huge, math.huge, math.huge),
+	Velocity = an.CFrame.lookVector * 0
+})
+local A1 = create("Attachment")({
+	Parent = Cube,
+	Position = Vector3.new(0, 1.2, 0)
+})
+local A2 = create("Attachment")({
+	Parent = Cube,
+	Position = Vector3.new(0, -1.2, 0)
+})
+local Trail = create("Trail")({
+	Parent = Cube,
+	LightEmission = 0.5,
+	FaceCamera = true,
+	Texture = "rbxassetid://945758042",
+	Attachment0 = A1,
+	Attachment1 = A2,
+	Lifetime = 2,
+	MinLength = 0,
+	TextureLength = 0.3,
+	Transparency = NumberSequence.new(0.2, 1),
+	Color = ColorSequence.new(BrickColor.new(color).Color)
+})
+aaa = NumberSequence.new({
+	NumberSequenceKeypoint.new(0, 30),
+	NumberSequenceKeypoint.new(1, 15)
+})
+bbb = NumberSequence.new({
+	NumberSequenceKeypoint.new(0, 1),
+	NumberSequenceKeypoint.new(0.04, 0),
+	NumberSequenceKeypoint.new(1, 1)
+})
+local Efect = create("ParticleEmitter")({
+	Color = ColorSequence.new(BrickColor.new(color).Color),
+	LightEmission = 1,
+	LightInfluence = 1,
+	Texture = "rbxassetid://311598000",
+	Transparency = bbb,
+	Size = aaa,
+	ZOffset = 0.5,
+	Acceleration = Vector3.new(0, 2, 0),
+	LockedToPart = false,
+	EmissionDirection = "Top",
+	Lifetime = NumberRange.new(0.5, 1),
+	Rate = 1000,
+	Rotation = NumberRange.new(-100, 100),
+	RotSpeed = NumberRange.new(-100, 100),
+	Speed = NumberRange.new(400),
+	VelocitySpread = 90,
+	Enabled = false,
+	Parent = Root
+})
+local Buff = create("BillboardGui")({
+	Size = UDim2.new(5, 0, 15, 0),
+	Adornee = Root,
+	Parent = Root,
+	ExtentsOffset = Vector3.new(0, 3, 0),
+	AlwaysOnTop = true
+})
+local BuffLabel = create("TextLabel")({
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	BackgroundTransparency = 1,
+	TextStrokeTransparency = 1,
+	TextTransparency = 1,
+	TextColor3 = Color3.new(0, 1, 1),
+	Position = UDim2.new(0.5, 0, 0.5, 0),
+	Size = UDim2.new(1.5, 0, 0.2, 0),
+	Text = "Damage+",
+	Font = "SourceSansBold",
+	TextScaled = true,
+	Parent = Buff
+})
+function Damage(Type, Partzz, hit, dmg, delay, hs, hv, hp)
+	if hit.Parent == nil then
+		return
+	end
+	local h = hit.Parent:FindFirstChildOfClass("Humanoid")
+	for _, v in pairs(hit.Parent:children()) do
+		if v:IsA("Humanoid") then
+			h = v
+		end
+	end
+	if h ~= nil and hit.Parent.Name ~= chr.Name then
+		if hit.Parent:findFirstChild("AHit") == nil then
+			h.Health = h.Health - dmg
+			if h.Health == math.huge then
+				hit.Parent:BreakJoints()
+			end
+		end
+		if hit.Parent:findFirstChild("AHit") == nil then
+			local c = create("BoolValue")({
+				Name = "AHit",
+				Value = true,
+				Parent = hit.Parent
+			})
+			game:GetService("Debris"):AddItem(c, delay)
+			if hs ~= "" and hit.Parent.Head.Parent ~= nil then
+				sounds(hit.Parent.Head, hs, hv, hp)
+			end
+			if Type == "Disappear" then
+				Part.Parent = nil
+			elseif Type == "None" then
+			end
+		end
+	end
+end
+function Mdamage(Type, Partzz, Magn, Dmg, delay, hs, hv, hp)
+	for _, c in pairs(workspace:children()) do
+		local hum = c:findFirstChildOfClass("Humanoid")
+		if hum ~= nil then
+			local ddee = c:findFirstChild("Head")
+			if ddee ~= nil then
+				local targ = ddee.Position - Partzz.Position
+				local mag = targ.magnitude
+				if Magn >= mag and c.Name ~= plr.Name then
+					Damage(Type, Partzz, ddee, Dmg, delay, hs, hv, hp)
+					if hum.Health == math.huge then
+						ddee:BreakJoints()
+					end
+				end
+			end
+		end
+	end
+end
+function effect(par, color, CF, x, y, z, x1, y1, z1, de, mtyp, typ, rad, id, pp)
+	local ex = create("Part")({
+		Size = Vector3.new(0.2, 0.2, 0.2),
+		BrickColor = BrickColor.new(color),
+		CanCollide = false,
+		Material = "Neon",
+		Anchored = true,
+		CFrame = CF,
+		Parent = par
+	})
+	NoOutline(ex)
+	local exe = create("SpecialMesh")({
+		Scale = Vector3.new(x, y, z),
+		MeshType = mtyp,
+		Parent = ex
+	})
+	if mtyp == "FileMesh" and id ~= "" then
+		exe.MeshId = "rbxassetid://" .. id
+	end
+	game:GetService("Debris"):AddItem(ex, 10)
+	local ez = ex.CFrame
+	local nu = 0
+	local no = math.random() - math.random()
+	coroutine.resume(coroutine.create(function()
+		if typ == 5 then
+			ex.Transparency = 1
+			for i = 1, -0.1, de do
+				swait()
+				ex.Transparency = i
+				exe.Scale = exe.Scale + Vector3.new(x1, y1, z1)
+				if pp ~= nil then
+					ex.CFrame = pp.CFrame
+				end
+			end
+		else
+			for i = 0, 1.1, de do
+				swait()
+				if typ ~= 6 then
+					ex.Transparency = i
+				end
+				exe.Scale = exe.Scale + Vector3.new(x1, y1, z1)
+				if typ == 1 then
+					ex.CFrame = ex.CFrame * CFrame.Angles(math.random(-360, 360), math.random(-360, 360), math.random(-360, 360))
+				elseif typ == 2 then
+					ex.CFrame = ex.CFrame * CFrame.Angles(0, math.rad(rad), 0)
+				elseif pp ~= nil and typ ~= 3 then
+					ex.CFrame = pp.CFrame
+				elseif pp ~= nil and typ == 3 then
+					ex.CFrame = pp.CFrame * CFrame.new(0, -2, 0) * CFrame.Angles(math.random(-360, 360), math.random(-360, 360), math.random(-360, 360))
+				elseif typ == 4 then
+					ex.CFrame = ex.CFrame * CFrame.new(0, 0, rad)
+				elseif typ == 8 then
+					nu = nu + no
+					ez = ez * CFrame.new(0, math.random(100, 200) / 90, 0)
+					ex.CFrame = ez * CFrame.Angles(nu, 0, 0)
+				end
+			end
+		end
+		ex:Remove()
+	end))
+end
+crosses = {}
+function cross(x1, y1, z1)
+	local e2 = create("Model")({Parent = chr, Name = "Effect2"})
+	local reffs = parts(e2, "reffs", Vector3.new(0.2, 0.2, 0.2), "Institutional white", Enum.Material.SmoothPlastic, 0, 1)
+	local reffy = parts(e2, "reffy", Vector3.new(4, 4, 4), "Institutional white", Enum.Material.SmoothPlastic, 0, 1)
+	local reffyWeld = welds(reffy, "reffyWeld", reffs, reffy, CFrame.new(0, 0, 0), CFrame.new(0, 0, 0))
+	reffs.Anchored = true
+	reffs.CFrame = an.CFrame * CFrame.new(x1, y1, z1)
+	reffy.CFrame = reffs.CFrame
+	local aa = create("BodyVelocity")({
+		Parent = reffy,
+		MaxForce = Vector3.new(math.huge, math.huge, math.huge),
+		Velocity = reffy.CFrame.lookVector * 0
+	})
+	local whaaa = create("BoolValue")({
+		Name = "what",
+		Value = false,
+		Parent = reffy
+	})
+	local oaksdo = parts(e2, "oaksdo", Vector3.new(0.200000003, 0.200000003, 0.200000003), "Institutional white", Enum.Material.SmoothPlastic, 0, 1)
+	local oaksdoWeld = welds(oaksdo, "oaksdoWeld", reffy, oaksdo, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0, -5.96046448E-8, -3.29997253, 1, -8.8817842E-16, 0, -8.8817842E-16, 1, 0, 0, 0, 1))
+	sounds(oaksdo, "171951986", 1.3, 0.9)
+	sounds(oaksdo, "677958398", 1.2, 1.4)
+	effect(e, color, oaksdo.CFrame, 30, 30, 30, 26, 26, 26, 0.06, "Sphere", 7, 0, "", oaksdo)
+	effect(e, color, oaksdo.CFrame, 80, 15, 3, 9, 0.2, 4, 0.03, "Sphere", 7, 0, "", oaksdo)
+	effect(e, color, reffy.CFrame, 3, 15, 160, 4, 0.2, 9, 0.03, "Sphere", 7, 0, "", reffy)
+	local A1 = create("Attachment")({
+		Parent = oaksdo,
+		Position = Vector3.new(24, 0, 0)
+	})
+	local A2 = create("Attachment")({
+		Parent = oaksdo,
+		Position = Vector3.new(-24, 0, 0)
+	})
+	local Trail22 = create("Trail")({
+		Parent = oaksdo,
+		LightEmission = 1,
+		FaceCamera = false,
+		Texture = "rbxassetid://945758042",
+		Attachment0 = A1,
+		Attachment1 = A2,
+		Lifetime = 1.5,
+		MinLength = 0,
+		TextureLength = 0.3,
+		Transparency = NumberSequence.new(0.2, 1),
+		Color = ColorSequence.new(BrickColor.new(color).Color),
+		Enabled = false
+	})
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.3000021), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(3.27825546E-7, -1.24998474, 13.8500748, -1.19872584E-5, -1, -1.99781789E-6, -1, 1.19872584E-5, 8.58562998E-10, -8.44011083E-10, 1.99781789E-6, -1))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.29998875), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.00134676695, -1.24651527, 13.8501701, 1.20127388E-5, 1, 1.41997822E-4, 0.99999994, -1.19611932E-5, -3.63000843E-4, -3.62999155E-4, 1.42002173E-4, -0.99999994))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.3000021), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.0018132925, 1.95083618, 10.6480846, 1.1200364E-4, 1, 9.19796221E-5, -3.64999229E-4, 9.20204911E-5, -0.99999994, -0.99999994, 1.11970061E-4, 3.65009531E-4))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.29998875), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(8.36879015E-4, -4.44849396, 10.6493454, 3.29965442E-5, -1, -9.10060116E-5, 9.99265467E-7, -9.10059753E-5, 1, -1, -3.29966351E-5, 9.96267772E-7))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.3000021), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.00106802583, 1.94846725, -2.34840584, -1.10996545E-4, -1, -5.29798053E-5, -1.00074976E-6, 5.29799145E-5, -1, 1, -1.10996487E-4, -1.00662874E-6))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.29998875), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-1.50591135E-4, -4.45084381, -2.34715271, -3.40036459E-5, 1, 5.20061949E-5, 3.63000785E-4, -5.19938476E-5, 0.99999994, 0.99999994, 3.4022516E-5, -3.6299901E-4))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 18.6000023), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(6.71952963E-4, -1.24765205, 12.7008324, -6.60015794E-5, -1, -1.42235163E-4, 1, -6.6001754E-5, 1.26347004E-6, -1.24191865E-6, -1.4220411E-4, 1))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.29998875), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.00159785151, -1.2488842, 0.75006485, 1.20127388E-5, 1, 1.41997822E-4, 0.99999994, -1.19610504E-5, -3.64000851E-4, -3.63999163E-4, 1.42002187E-4, -0.99999994))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.3000021), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.00208094716, -1.25236893, 0.749977112, -1.19872584E-5, -1, -1.99781789E-6, -1, 1.19872611E-5, -9.991345E-7, 9.99149051E-7, 1.99780334E-6, -1))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.3000021), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-8.71568918E-4, 1.9484787, -2.25188637, 1.1200364E-4, 1, 9.19796221E-5, -3.64999229E-4, 9.20204911E-5, -0.99999994, -0.99999994, 1.11970061E-4, 3.65009531E-4))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.29998875), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.00176566839, -4.45082855, -2.25062561, 3.29965442E-5, -1, -9.10060116E-5, 9.99265467E-7, -9.10059753E-5, 1, -1, -3.29966351E-5, 9.96267772E-7))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.3000021), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(1.3923645E-4, 1.95080185, 10.5515842, -1.10996545E-4, -1, -5.29798053E-5, -1.00074976E-6, 5.29799145E-5, -1, 1, -1.10996487E-4, -1.00662874E-6))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.29998875), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.00109228492, -4.44850922, 10.5528355, -3.40036459E-5, 1, 5.20061949E-5, 3.63000785E-4, -5.19938476E-5, 0.99999994, 0.99999994, 3.4022516E-5, -3.6299901E-4))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.29998875), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0.00194120407, -1.25003242, -5.54913712, -6.60127407E-5, -1, -1.41987999E-4, 1, -6.60127407E-5, -4.75847628E-9, -4.62750904E-9, -1.41987999E-4, 1))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 8.3000021), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-5.74678183E-4, -1.25352097, -5.54923248, 6.59872603E-5, 1, 1.98799535E-6, -0.99999994, 6.59865254E-5, 3.65004758E-4, 3.65004642E-4, -2.01207877E-6, 1))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	local Cross = parts(e2, "Cross", Vector3.new(0.800000012, 2.49999976, 18.5000114), "Institutional white", Enum.Material.Neon, 0, 0)
+	local CrossWeld = welds(Cross, "CrossWeld", reffy, Cross, CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(-0.00114879012, -1.25113106, 12.6507683, 6.59760553E-5, 1, 1.82806252E-6, -0.99999994, 6.59753787E-5, 3.65216809E-4, 3.65247601E-4, -1.82119402E-6, 1))
+	meshs(Cross, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Wedge, "")
+	e2.PrimaryPart = reffs
+	coroutine.resume(coroutine.create(function()
+		repeat
+			swait()
+			CFrame.new(x1, y1, z1)
+			reffs.CFrame = clerp(an.CFrame, reffs.CFrame * CFrame.new(x1, y1, z1), 0.4)
+			reffy.CFrame = reffy.CFrame:Lerp(CFrame.new(reffs.CFrame.p, mouse.hit.p), 0.4)
+		until whaaa.Value == true
+		sounds(reffy, "252625977", 1.8, 1.2)
+		local detect = CFrame.new((reffy.Position + mouse.hit.p) / 2, mouse.hit.p)
+		table.insert(crosses, {
+			reffy,
+			e2,
+			detect.lookVector,
+			reffy.Position,
+			150,
+			oaksdo,
+			Trail22
+		})
+	end))
+end
+local function laser(eee)
+	local ref2 = parts(e, "ref2", Vector3.new(0.199999928, 0.199999988, 0.199999988), color, Enum.Material.Neon, 0, 0)
+	ref2.Anchored = true
+	ref2.CFrame = eee.CFrame * CFrame.new(math.random(-250, 250), 600, math.random(-250, 250))
+	local ref25 = parts(e, "ref25", Vector3.new(0.199999928, 0.199999988, 0.199999988), color, Enum.Material.Neon, 0, 0)
+	ref25.Anchored = true
+	ref25.CFrame = ref2.CFrame
+	meshs(ref25, "Mesh", Vector3.new(300, 500, 300), Enum.MeshType.Sphere, "")
+	local oof2 = create("CylinderMesh")({
+		Parent = ref2,
+		Scale = Vector3.new(300, 29999, 300),
+		Offset = Vector3.new(0, 2999.5, 0)
+	})
+	coroutine.resume(coroutine.create(function()
+		local alreadyhit = false
+		for i = 1, 120 do
+			swait()
+			local detect = CFrame.new(ref2.Position + Vector3.new(0, -120, 0))
+			local hit, pos = rayCast(ref2.Position, -detect.upVector / 2, 35, chr)
+			ref2.CFrame = clerp(ref2.CFrame, CFrame.new(pos), 0.5)
+			ref25.CFrame = clerp(ref25.CFrame, CFrame.new(pos), 0.5)
+			if hit ~= nil and alreadyhit == false then
+				alreadyhit = true
+				break
+			end
+		end
+		alreadyhit = true
+		Mdamage("None", ref2, 36, math.random(25, 45), 0, "")
+		sounds(ref2, "218321903", 1.5, 0.9)
+		sounds(ref2, "334846438", 1.3, 0.6)
+		effect(e, color, CFrame.new(ref2.Position) * CFrame.Angles(0, math.rad(-360, 360), 0), 2, 1, 2, 8, 2, 8, 0.04, "FileMesh", 2, math.random(-10, 10), "20329976")
+		effect(e, color, CFrame.new(ref2.Position), 20, 1, 20, 18, 0.01, 18, 0.023, "Sphere", 7)
+		effect(e, color, CFrame.new(ref2.Position), 20, 1, 20, 25, 0.01, 25, 0.0274, "Sphere", 7)
+		local hh = 0
+		local hj = 80
+		local hk = 0.045
+		local hl = 36
+		local ree = Efect:Clone()
+		ree.Parent = ref2
+		ree.Enabled = true
+		for i = 1, 60 do
+			swait()
+			hh = hh + 1
+			hj = hj - 0.8
+			hk = hk + 0.001
+			hl = hl - 0.3
+			Mdamage("None", ref2, hl, 1, 0.01, "")
+			ree.Speed = NumberRange.new(hl * 6)
+			ree.Size = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, hl * 0.5),
+				NumberSequenceKeypoint.new(1, hl * 0.1)
+			})
+			ref25.Mesh.Scale = ref25.Mesh.Scale - Vector3.new(4.9, 0, 4.9)
+			oof2.Scale = oof2.Scale - Vector3.new(4.9, 0, 4.9)
+		end
+		ree.Enabled = false
+		ref2.Transparency = 1
+		ref25.Transparency = 1
+		game:GetService("Debris"):AddItem(ref2, 4)
+		game:GetService("Debris"):AddItem(ref25, 4)
+	end))
+end
+function What()
+	attack = true
+	attack = false
+end
+function idk1()
+	attack = true
+	local as = Cube.CFrame:toObjectSpace(main.CFrame):inverse()
+	CubeWeld.C0 = as
+	CubeWeld.Part0 = Root
+	hum.WalkSpeed = 0
+	hum.JumpPower = 0
+	hum.AutoRotate = false
+	sounds(Cube, "1452040709", 1.1, 1.2)
+	effect(e, color, Cube.CFrame, 5, 5, 5, 4, 4, 4, 0.04, "Sphere", 3, 0, "", Cube)
+	local aim = CFrame.new(Root.Position, mouse.Hit.p)
+	local direction = aim.lookVector
+	local faceto = math.atan2(direction.x, direction.z)
+	local faceto = math.rad(faceto)
+	for i = 0, 1, 0.06 do
+		swait()
+		aim = CFrame.new(Root.Position, mouse.Hit.p)
+		direction = aim.lookVector
+		faceto = math.atan2(direction.x, direction.z)
+		faceto = math.deg(faceto)
+		Root.CFrame = clerp(Root.CFrame, CFrame.new(Root.Position) * CFrame.Angles(0, math.rad(faceto - 180), 0), 0.4)
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0, 0, 0, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(9.50672984E-7, 1.5324347, 0.101000369, 1, 3.34200578E-9, 2.53483492E-8, 3.6266381E-9, 0.962855399, -0.270017833, -2.53091912E-8, 0.270017862, 0.962855399) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.31959105, 1.517416, -0.00789651088, 0.992839336, 0.119457632, 1.00140221E-6, 0.119456023, -0.992825985, -0.00518712262, -6.18647144E-4, 0.00515009882, -0.999986589) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.30247545, 1.61470997, 0.00832868367, 0.989566624, -0.144076049, -5.89913543E-6, -0.143966123, -0.9888134, 0.0390129089, -0.00562665798, -0.0386050232, -0.999238729) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.500011444, -2.00008392, 0, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.500022888, -2.00008202, -3.81469727E-6, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.00100136921, 3.76662302, 0.103378534, -1, 2.53090811E-8, -3.64420849E-9, -3.6646095E-9, 3.03187389E-5, 0.999993742, 2.5309193E-8, 1, -3.03185625E-5) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.2)
+	end
+	for i = 0, 1, 0.07 do
+		swait()
+		aim = CFrame.new(Root.Position, mouse.Hit.p)
+		direction = aim.lookVector
+		faceto = math.atan2(direction.x, direction.z)
+		faceto = math.deg(faceto)
+		Root.CFrame = clerp(Root.CFrame, CFrame.new(Root.Position) * CFrame.Angles(0, math.rad(faceto - 180), 0), 0.4)
+		RJ.C0 = clerp(RJ.C0, CFrame.new(9.60936404E-7, -0.0909818709, 0.273896694, 1, 4.53680205E-9, 2.51619774E-8, 3.6266381E-9, 0.949011266, -0.315242112, -2.53091912E-8, 0.315242141, 0.949011266) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.37337303, 0.107132673, 1, 0, 0, 0, 0.995335221, -0.096478045, 0, 0.0964780748, 0.995335221) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.36920965, 1.29857612, 0.102419689, 0.992839336, 0.105623432, -0.0558015704, 0.113170102, -0.981205881, 0.156292796, -0.0382446498, -0.161488771, -0.986133218) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.36361814, 1.39983165, 0.253942698, 0.989566624, -0.122978799, 0.0750604048, -0.138397664, -0.956193089, 0.257955402, 0.0400491916, -0.26565221, -0.963236809) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.50001049, -1.89810228, 0.341903567, 1, 3.6266381E-9, -2.53091912E-8, 4.53680205E-9, 0.949011266, 0.315242141, 2.51619774E-8, -0.315242112, 0.949011266) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.500023842, -1.89810169, 0.341899365, 1, 3.6266381E-9, -2.53091912E-8, 4.53680205E-9, 0.949011266, 0.315242141, 2.51619774E-8, -0.315242112, 0.949011266) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.00100133976, 3.40562487, 1.21593833, -1, 2.53090811E-8, -3.64420849E-9, -3.6646095E-9, 3.03187389E-5, 0.999993742, 2.5309193E-8, 1, -3.03185625E-5) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.2)
+	end
+	local ref = parts(e, "ref", Vector3.new(1, 1, 4), "New Yeller", Enum.Material.Neon, 0, 1)
+	ref.CFrame = CFrame.new(mouse.Hit.p)
+	local aa = create("BodyVelocity")({
+		Parent = ref,
+		MaxForce = Vector3.new(math.huge, math.huge, math.huge),
+		Velocity = ref.CFrame.lookVector * 0
+	})
+	as = Cube.CFrame:toObjectSpace(ref.CFrame):inverse()
+	CubeWeld.C0 = as
+	CubeWeld.Part0 = ref
+	ea = true
+	sounds(Root, "860448713", 1.1, 1)
+	for i = 0, 1, 0.05 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(9.45481588E-7, -0.0520538352, -0.331164598, 1, -1.16282681E-8, 2.27704007E-8, 3.6266381E-9, 0.946098626, 0.323878855, -2.53091912E-8, -0.323878855, 0.946098626) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.52994943, -0.0821220428, 1, 0, 0, 0, 0.984855652, 0.173376948, 0, -0.173376948, 0.984855652) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.12598777, 0.581086516, -0.956983328, 0.947525978, 0.298011035, 0.115689255, 0.131396726, -0.0331522822, -0.990775466, -0.291426599, 0.953986704, -0.0705703497) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		LS.C0 = clerp(LS.C0, CFrame.new(-0.979296505, 0.614786446, -1.05503738, 0.964489341, -0.262767047, 0.0267188121, 0.0267549306, -0.00344124436, -0.999636292, 0.262763441, 0.964853227, 0.0037112534) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.50001049, -1.95028663, -0.317610919, 1, 3.6266381E-9, -2.53091912E-8, -1.16282681E-8, 0.946098626, -0.323878855, 2.27704007E-8, 0.323878855, 0.946098626) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.500023842, -1.95028353, -0.31761393, 1, 3.6266381E-9, -2.53091912E-8, -1.16282681E-8, 0.946098626, -0.323878855, 2.27704007E-8, 0.323878855, 0.946098626) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 1, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.08)
+	end
+	attack = false
+	hum.AutoRotate = true
+	hum.WalkSpeed = Speedz.Value
+	hum.JumpPower = Jumpz.Value
+	coroutine.resume(coroutine.create(function()
+		coroutine.resume(coroutine.create(function()
+			while ea == true do
+				swait()
+				CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 1, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.08)
+			end
+		end))
+		swait(60)
+		sounds(Cube, "169380469", 2, 1.3)
+		local aa = 0.5
+		effect(e, color, Cube.CFrame, 400, 400, 400, -6, -6, -6, -0.015, "Sphere", 5)
+		for i = 1, 100 do
+			swait()
+			aa = aa + 0.1
+			effect(e, color, Cube.CFrame * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), aa * 6, aa * 6, aa * 20, 0, 0, 0, 0.05, "Sphere", 4, aa)
+			effect(e, color, Cube.CFrame * CFrame.new(math.random(-1, 1) * 5, math.random(-1, 1) * 5, math.random(-1, 1) * 5) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), aa * 6, aa * 6, aa * 20, 0, 0, 0, 0.05, "Sphere", 4, aa / 2)
+		end
+		sounds(Cube, "1073489397", 1.5, 1.2)
+		sounds(Cube, "1237044904", 1.5, 1.1)
+		sounds(Cube, "585802464", 1.5, 1.2)
+		local efec = parts(e, "hit", Vector3.new(0.2, 3, 0.2), color, Enum.Material.Neon, 0, 0)
+		local lazytomeshs = create("CylinderMesh")({
+			Parent = efec,
+			Scale = Vector3.new(800, 29999, 800)
+		})
+		efec.CFrame = CFrame.new(Cube.Position) * CFrame.Angles(0, 0, 0)
+		efec.Anchored = true
+		local b = 89
+		effect(e, color, CFrame.new(Cube.Position), 20, 1, 20, 24, 0.01, 24, 0.009, "Sphere", 7)
+		effect(e, color, CFrame.new(Cube.Position), 20, 1, 20, 30, 0.01, 30, 0.014, "Sphere", 7)
+		local ree = Efect:Clone()
+		ree.Parent = efec
+		ree.Enabled = true
+		for i = 1, 200 do
+			swait()
+			Mdamage("None", Cube, b, math.random(1, 3) / 2, 0, "")
+			aa = aa - 0.05
+			b = b - 0.5
+			ree.Speed = NumberRange.new(aa * 45)
+			ree.Size = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, aa * 4),
+				NumberSequenceKeypoint.new(1, aa * 1.5)
+			})
+			lazytomeshs.Scale = lazytomeshs.Scale - Vector3.new(4, 0, 4)
+			effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-aa * 20, aa * 20), math.random(-160, 160), math.random(-aa * 20, aa * 20))), 240, 240, 240, -7, -7, -7, 0.04, "Sphere", 7)
+			effect(e, color, CFrame.new(Cube.Position) * CFrame.new(math.random(-aa * 21, aa * 21), math.random(-160, 160), math.random(-aa * 21, aa * 21)) * CFrame.Angles(math.rad(90), 0, 0), 80, 80, 120, -1, -1, 8, 0.045, "Sphere", 4, -8)
+			effect(e, color, CFrame.new(Cube.Position) * CFrame.Angles(0, math.rad(-360, 360), 0), aa * 4, aa, aa * 4, 8, 2, 8, 0.06, "FileMesh", 2, math.random(-10, 10), "20329976")
+		end
+		ree.Enabled = false
+		swait(50)
+		game:GetService("Debris"):AddItem(efec, 3)
+		game:GetService("Debris"):AddItem(ref, 2)
+		ea = false
+		as = Cube.CFrame:toObjectSpace(main.CFrame):inverse()
+		CubeWeld.C0 = as
+	end))
+end
+function idk2()
+	attack = true
+	ea = true
+	local as = Cube.CFrame:toObjectSpace(main.CFrame):inverse()
+	CubeWeld.C0 = as
+	CubeWeld.Part0 = RArm
+	hum.WalkSpeed = 0
+	hum.JumpPower = 0
+	for i = 0, 1, 0.08 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(-5.93243749E-6, 2.14995313E-11, 7.09826736E-7, 0.928567767, -3.62740549E-9, -0.371162891, 1.12565585E-5, 1, 2.8151655E-5, 0.371162891, -3.03187353E-5, 0.928567767) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-0.0346583128, 1.48674023, -0.0644454211, 0.880889475, -0.114495724, 0.459265113, 0, 0.970301628, 0.241898194, -0.473321974, -0.213085577, 0.85472852) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.08155298, 0.170574233, -0.989316583, 0.0714998469, 0.357521892, 0.931163847, 0.933718264, 0.30433622, -0.188546404, -0.350796312, 0.88292563, -0.312064707) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.63014674, 0.116438389, 0.0159141868, 0.937015891, 0.347774088, -0.0324712694, -0.345783979, 0.936734855, 0.054417599, 0.0493420064, -0.039762117, 0.997990131) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.49999693, -2.00008202, -3.44067812E-5, 0.977368593, 0, 0.211543977, 0, 1, 0, -0.211543977, 0, 0.977368593) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.500038981, -2.00007915, -3.61800194E-5, 0.962690234, 0, 0.270605892, 0, 1, 0, -0.270605892, 0, 0.962690234) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0.239963442, -2.09175873, -5.73575497E-4, -0.196595043, -0.299200058, 0.933712423, -0.00427403022, 0.95255518, 0.304334313, -0.980475545, 0.0558402538, -0.188545227) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.3)
+	end
+	sounds(Cube, "1452040709", 1.1, 1.2)
+	sounds(Cube, "166218031", 1.1, 3)
+	effect(e, color, Cube.CFrame, 120, 120, 120, -4, -4, -4, -0.04, "Sphere", 5, 0, "", Cube)
+	for i = 1, 50 do
+		swait()
+		effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-1, 1) * 12, math.random(-1, 1) * 12, math.random(-1, 1) * 12), Cube.Position), 10, 10, 50, -0.2, -0.2, -0.5, 0.05, "Sphere", 4, -0.8)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0.239963442, -2.09175873, -5.73575497E-4, -0.196595043, -0.299200058, 0.933712423, -0.00427403022, 0.95255518, 0.304334313, -0.980475545, 0.0558402538, -0.188545227) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.3)
+	end
+	for i = 0, 1, 0.07 do
+		swait()
+		effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-1, 1) * 12, math.random(-1, 1) * 12, math.random(-1, 1) * 12), Cube.Position), 10, 10, 50, -0.2, -0.2, -0.5, 0.05, "Sphere", 4, -0.8)
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0.103014871, -2.92431832E-6, -0.0807373673, 0.426649958, -3.62740549E-9, -0.904416859, 2.74223239E-5, 1, 1.2932207E-5, 0.904416859, -3.03187353E-5, 0.426649958) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0.0291106813, 1.50003302, 0.127634749, 0.426649958, 2.74223239E-5, 0.904416859, -3.62740549E-9, 1, -3.03187353E-5, -0.904416859, 1.2932207E-5, 0.426649958) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RS.C0 = clerp(RS.C0, CFrame.new(0.836720049, 0.684399247, -0.854541898, 0.290725082, 0.547337651, 0.784793258, 0.936510623, -0.330824971, -0.116201483, 0.196027771, 0.768749833, -0.608766675) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.69637227, 0.154963076, -0.0621363111, 0.923155785, 0.382935166, -0.0338235497, -0.384425998, 0.91957432, -0.0812396631, -6.22868538E-6, 0.087999545, 0.996120512) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.500018179, -2.00007606, -5.48064709E-5, 0.494317383, 0, 0.86928159, 0, 1, 0, -0.86928159, 0, 0.494317383) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.500021696, -2.00007606, -4.22149897E-5, 0.430303931, 0, 0.902684152, 0, 1, 0, -0.902684152, 0, 0.430303931) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.0453897938, -2.29861259, 0.0409510322, -1.00000012, -1.49011612E-8, 5.96046448E-8, -2.98023224E-8, 3.81469727E-6, 1.00000012, 1.49011612E-8, 1.00000012, -3.84449959E-6) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.3)
+	end
+	for i = 0, 1, 0.13 do
+		swait()
+		effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-1, 1) * 12, math.random(-1, 1) * 12, math.random(-1, 1) * 12), Cube.Position), 10, 10, 50, -0.2, -0.2, -0.5, 0.05, "Sphere", 4, -0.8)
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0.076717712, -0.00584045378, 0.355370373, 0.191507071, 0.0728858784, -0.978781223, -0.355664343, 0.934613764, 8.07360721E-6, 0.914783001, 0.34811607, 0.204908028) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-0.0123594422, 1.48047268, 0.186209008, 0.191507041, 0.00730887055, 0.981464088, 0.0728858709, 0.99710542, -0.0216470659, -0.978781223, 0.0756804273, 0.190419972) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		RS.C0 = clerp(RS.C0, CFrame.new(0.293865412, 0.736160517, -0.957405388, 0.0948827565, 0.858546615, 0.503879905, 0.954146802, -0.222784996, 0.199927092, 0.283903629, 0.461805701, -0.840317905) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.55749047, 0.236681581, -0.30518043, 0.93649143, 0.321685106, -0.13965179, -0.349549085, 0.824132681, -0.445669115, -0.028273508, 0.466180354, 0.884237826) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.817574859, -1.82261384, -5.28432429E-5, 0.461993456, -0.355692089, 0.812431574, 0.175827622, 0.934603214, 0.309194922, -0.869279325, 1.86460511E-6, 0.494321018) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.643577337, -1.3255868, -0.0700441599, 0.324972153, -0.524087727, 0.787226319, 0.123680048, 0.848809063, 0.51402986, -0.937601388, -0.0696811751, 0.340658426) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.0453897938, -2.29861259, 0.0409510322, -1.00000012, -1.49011612E-8, 5.96046448E-8, -2.98023224E-8, 3.81469727E-6, 1.00000012, 1.49011612E-8, 1.00000012, -3.84449959E-6) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.3)
+	end
+	for i = 0, 1, 0.2 do
+		swait()
+		effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-1, 1) * 12, math.random(-1, 1) * 12, math.random(-1, 1) * 12), Cube.Position), 10, 10, 50, -0.2, -0.2, -0.5, 0.05, "Sphere", 4, -0.8)
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0.0568452738, -0.224711508, -0.202228919, -2.19777974E-8, 2.4986939E-5, 1, -0.383886039, 0.923380494, -2.30808873E-5, -0.923380494, -0.383886039, 9.57184329E-6) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.44)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-0.109000817, 1.42595112, -0.056881316, 0, -0.211173102, -0.977448761, 2.5000003E-5, 0.977448761, -0.211173102, 1, -2.44362218E-5, 5.27932843E-6) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.44)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.88960576, 0.857628763, -7.48464809E-5, -0.383858055, -0.923392117, 0, 0.923392117, -0.383858055, 2.5000003E-5, -2.30848054E-5, 9.5964524E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.44)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.75189364, 0.131784275, -0.200557917, 0.372576803, 0.915209174, -0.153553903, -0.925261796, 0.353651077, -0.137192011, -0.0712548941, 0.193192109, 0.978570104) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.44)
+		RH.C0 = clerp(RH.C0, CFrame.new(1.27593172, -1.4200815, 0.0159305744, 0.0488181338, -0.599020123, -0.799244583, 0.0478412658, 0.800682425, -0.597175717, 0.997661233, -0.00908386428, 0.0677457079) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.44)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.479860276, -1.99941897, -0.111460805, 0.959921241, -0.12434727, -0.251175255, 0.120296985, 0.992238879, -0.0314783007, 0.253140062, 1.07332107E-6, 0.967429638) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.44)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.0453897938, -2.29861259, 0.0409510322, -1.00000012, -1.49011612E-8, 5.96046448E-8, -2.98023224E-8, 3.81469727E-6, 1.00000012, 1.49011612E-8, 1.00000012, -3.84449959E-6) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.3)
+	end
+	sounds(Cube, "133047927", 1.2, 0.8)
+	sounds(Cube, "763717897", 1.1, 1)
+	local sounds = create("Sound")({
+		Parent = Cube,
+		SoundId = "rbxassetid://325166405",
+		Volume = 1.1,
+		PlaybackSpeed = 0.9,
+		Looped = true
+	})
+	sounds:Play()
+	local ref = parts(e, "ref", Vector3.new(0.199999928, 0.199999988, 0.199999988), color, Enum.Material.Neon, 0, 1)
+	local refWeld = welds(ref, "EfecWeld", RArm, ref, CFrame.new(0, -4, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), CFrame.new(0, 0, 0))
+	local efecs = parts(e, "r1", Vector3.new(40, 40, 40), color, Enum.Material.Neon, 0, 0)
+	efecs.CFrame = ref.CFrame * CFrame.new(0, 0, -25)
+	meshs(efecs, "Mesh", Vector3.new(1, 1, 1), Enum.MeshType.Sphere, "")
+	local aa = create("BodyVelocity")({
+		Parent = efecs,
+		MaxForce = Vector3.new(math.huge, math.huge, math.huge),
+		Velocity = efecs.CFrame.lookVector * 0
+	})
+	local efec2 = parts(e, "r2", Vector3.new(40, 40, 40), color, Enum.Material.Neon, 0, 0)
+	efec2.CFrame = Root.CFrame * CFrame.new(0, 0, -20) * CFrame.Angles(math.rad(90), 0, 0)
+	local lazytomeshs = create("CylinderMesh")({Parent = efec2})
+	local aa = create("BodyVelocity")({
+		Parent = efec2,
+		MaxForce = Vector3.new(math.huge, math.huge, math.huge),
+		Velocity = efec2.CFrame.lookVector * 0
+	})
+	effect(e, color, ref.CFrame, 10, 8, 10, 33, -0.3, 33, 0.02, "Sphere", 7, 0, "", ref)
+	effect(e, color, ref.CFrame * CFrame.Angles(math.rad(90), 0, 0), 6, 6, 4, 12, 12, 0, 0.03, "FileMesh", 7, 0, "3270017")
+	local a = 0
+	local b = 12
+	local c = 10
+	local d = 5
+	local es = 40
+	local f = 0.045
+	local g = 12
+	local h = 80
+	local ref2 = parts(e, "ref", Vector3.new(0.199999928, 0.199999988, 0.199999988), color, Enum.Material.Neon, 0, 1)
+	ref2.Anchored = true
+	ref2.CFrame = Root.CFrame
+	local ref3 = parts(e, "ref", Vector3.new(0.199999928, 0.199999988, 0.199999988), color, Enum.Material.Neon, 0, 1)
+	ref3.Anchored = true
+	ref3.CFrame = Root.CFrame
+	for i = 0, 180 do
+		swait()
+		a = a + 1
+		if a >= 3 then
+			a = 0
+			effect(e, color, ref.CFrame, 10, 8, 10, 16, -0.2, 16, 0.04, "Sphere", 7, 0, "", ref)
+		end
+		d = d + 10
+		ref2.CFrame = efec2.CFrame * CFrame.new(0, -d * math.random(-51, 100) / 100, 0)
+		ref3.CFrame = efec2.CFrame * CFrame.new(0, -d * math.random(-51, 100) / 100, 0)
+		Mdamage("None", efecs, 40, math.random(1, 2), 0, "1132647884", 1.2, 1.4)
+		Mdamage("None", ref2, 40, math.random(1, 2), 0, "1132647884", 1.2, 1.4)
+		Mdamage("None", ref3, 40, math.random(1, 2), 0, "1132647884", 1.2, 1.4)
+		effect(e, color, ref.CFrame * CFrame.new(0, 2, 0) * CFrame.Angles(0, math.rad(math.random(-360, 360)), 0), h, b, h, 1, 0.2, 1, 0.04, "FileMesh", 7, 0, "20329976")
+		effect(e, color, ref.CFrame * CFrame.new(math.random(-b * 3, b * 3), 0, math.random(-b * 3, b * 3)) * CFrame.Angles(math.rad(90), math.rad(math.random(-10, 20)), math.rad(math.random(-10, 20))), 30, 30, 60, -1, -1, 8, 0.045, "Sphere", 4, 7)
+		efecs.CFrame = clerp(efecs.CFrame, ref.CFrame * CFrame.new(0, -20, 0), 1)
+		efec2.CFrame = clerp(efec2.CFrame, efecs.CFrame * CFrame.new(0, -d / 2, 0) * CFrame.Angles(0, 0, 0), 1)
+		efec2.Size = Vector3.new(40, d, 40)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.0453897938, -2.29861259, 0.0409510322, -1.00000012, -1.49011612E-8, 5.96046448E-8, -2.98023224E-8, 3.81469727E-6, 1.00000012, 1.49011612E-8, 1.00000012, -3.84449959E-6) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.3)
+	end
+	ref2:Remove()
+	ref3:Remove()
+	for i = 1.1, 0, -0.0146 do
+		swait()
+		b = b - 0.2
+		c = c - 0.1
+		a = a + 1
+		es = es - 0.58
+		f = f + 0.002
+		g = g - 0.15
+		h = h - 1.1
+		if a >= 3 then
+			a = 0
+			effect(e, color, ref.CFrame, c, 5, c, b, -0.2, b, 0.04, "Sphere", 7, 0, "", ref)
+		end
+		sounds.Volume = i
+		effect(e, color, ref.CFrame * CFrame.new(0, 2, 0) * CFrame.Angles(0, math.rad(math.random(-360, 360)), 0), h, b, h, 1, 0.2, 1, 0.04, "FileMesh", 7, 0, "20329976")
+		effect(e, color, ref.CFrame * CFrame.new(math.random(-g * 3, g * 3), 0, math.random(-g * 3, g * 3)) * CFrame.Angles(math.rad(90), math.rad(math.random(-15, 15)), math.rad(math.random(-15, 15))), c * 3, c * 3, 60, -1, -1, 8, f, "Sphere", 4, 7)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.0453897938, -2.29861259, 0.0409510322, -1.00000012, -1.49011612E-8, 5.96046448E-8, -2.98023224E-8, 3.81469727E-6, 1.00000012, 1.49011612E-8, 1.00000012, -3.84449959E-6) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.3)
+		efecs.CFrame = clerp(efecs.CFrame, ref.CFrame * CFrame.new(0, -es / 2, 0), 1)
+		efec2.CFrame = clerp(efec2.CFrame, efecs.CFrame * CFrame.new(0, -d / 2, 0) * CFrame.Angles(0, 0, 0), 1)
+		efecs.Size = Vector3.new(es, es, es)
+		efec2.Size = Vector3.new(es, d, es)
+	end
+	efecs:Remove()
+	efec2:Remove()
+	sounds:Remove()
+	ref:Remove()
+	as = Cube.CFrame:toObjectSpace(RArm.CFrame):inverse()
+	CubeWeld.C0 = as
+	hum.WalkSpeed = Speedz.Value
+	hum.JumpPower = Jumpz.Value
+	attack = false
+	ea = false
+end
+function idk3()
+	attack = true
+	ea = true
+	hum.WalkSpeed = 0
+	hum.JumpPower = 0
+	for i = 0, 1, 0.08 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(-4.33606218E-9, -1.62866163, -0.404699862, 1, -2.26156054E-8, 1.19265309E-8, 3.6266381E-9, 0.587218821, 0.809428275, -2.53091912E-8, -0.809428275, 0.587218821) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.49420226, -0.157599151, 1, 0, 0, 0, 0.956930518, 0.290317386, 0, -0.290317386, 0.956930518) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.60326719, 0.165573373, -0.843753278, 0.990470767, -0.137723103, -1.555891E-6, 0.0452935956, 0.325751096, -0.944370091, 0.130062088, 0.935370922, 0.328884929) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.41393173, 0.213934481, -0.859694719, 0.992489755, 0.122327819, 1.15259127E-6, -0.0508138947, 0.412280053, -0.90963912, -0.111274637, 0.902807415, 0.415399671) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.731951952, -1.99554384, 0.309756339, 0.963482261, -0.266114831, 0.0297494642, 0.242933348, 0.915426612, 0.320901513, -0.112630107, -0.30195576, 0.946645319) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.645229697, -1.98440266, 0.11164809, 0.986837983, 0.160791233, 0.0172375161, -0.161712557, 0.981214285, 0.105202943, 2.01165676E-6, -0.106605768, 0.994301438) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.1)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.1)
+	end
+	hum.JumpPower = 60
+	sounds(Root, "1452040709", 1.1, 1.2)
+	sounds(Root, "93724183", 1, 2.1)
+	effect(e, color, Torso.CFrame, 120, 120, 120, -4, -4, -4, -0.04, "Sphere", 5, 0, "", Torso)
+	local ref = parts(e, "ref", Vector3.new(0.199999928, 0.199999988, 0.199999988), color, Enum.Material.Neon, 0, 1)
+	ref.Anchored = true
+	ref.CFrame = CFrame.new(Root.Position)
+	for i = 1, 50 do
+		swait()
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		effect(e, color, CFrame.new(Torso.Position + Vector3.new(math.random(-1, 1) * 12, math.random(-1, 1) * 12, math.random(-1, 1) * 12), Torso.Position), 10, 10, 50, -0.2, -0.2, -0.5, 0.05, "Sphere", 4, -0.8)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.1)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.1)
+	end
+	sounds(Root, "417101384", 1.4, 1.3)
+	sounds(ref, "417101384", 1.4, 1.3)
+	hum.Jump = true
+	Torso.Velocity = Root.CFrame.lookVector * 0 + Vector3.new(0, 1, 0) * 240
+	for i = 0, 1, 0.03 do
+		swait()
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		effect(e, color, CFrame.new(Torso.Position + Vector3.new(math.random(-1, 1) * 12, math.random(-1, 1) * 12, math.random(-1, 1) * 12), Torso.Position), 10, 10, 50, -0.2, -0.2, -0.5, 0.05, "Sphere", 4, -0.8)
+		RJ.C0 = clerp(RJ.C0, CFrame.new(1.27942856E-9, -0.0025275033, 0.0501897596, 1, -1.06778786E-9, 2.55454005E-8, 3.6266381E-9, 0.994949162, -0.100379847, -2.53091912E-8, 0.100379847, 0.994949162) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.46451819, 0.136381671, 1, 0, 0, 0, 0.96773237, -0.251980543, 0, 0.251980543, 0.96773237) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.60655272, 0.140721351, -2.50170851E-5, 0.967689216, -0.252146065, 4.00024828E-6, 0.252146035, 0.967689216, -3.4570694E-6, -3.00072134E-6, 4.35858965E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.60588777, 0.182476342, 3.46600791E-6, 0.912787139, 0.408435762, -5.3364829E-6, -0.408435732, 0.91278708, -2.41473317E-5, -4.991889E-6, 2.42218375E-5, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.500007629, -2.04610825, 0.225123167, 1, 0, 0, 0, 0.968374431, 0.249501422, 0, -0.249501422, 0.968374431) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.543848097, -1.17281246, -0.246499091, 0.99947387, 0.0324356109, 3.94547556E-7, -0.0310850926, 0.957855463, 0.285563946, 0.00926206261, -0.285413712, 0.958359659) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.1)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.1)
+	end
+	Root.Anchored = true
+	for i = 0, 1, 0.05 do
+		swait()
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(-1.59734348E-9, -0.0419756472, -0.0691280141, 1, -7.0387407E-9, 2.45797445E-8, 3.6266381E-9, 0.990688145, 0.136151075, -2.53091912E-8, -0.136151075, 0.990688145) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.47551858, -0.118179992, 1, 0, 0, 0, 0.979175568, 0.203015253, 0, -0.203015253, 0.979175568) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RS.C0 = clerp(RS.C0, CFrame.new(0.827668369, 0.418387294, -0.826511979, 0.00395300146, 0.587939084, 0.808895648, 0.994232833, 0.0843812823, -0.0661905408, -0.10717164, 0.804492176, -0.584214747) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LS.C0 = clerp(LS.C0, CFrame.new(-0.487014174, 0.427656859, -0.790905595, -0.0411820039, -0.807263196, -0.588753104, -0.989011824, 0.11667154, -0.0907938778, 0.141985297, 0.578544676, -0.803197622) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.551399052, -1.99507236, 3.74941465E-6, 0.995294988, -0.096891433, -3.20796653E-6, 0.0968914405, 0.995295048, 2.08616257E-6, 2.98954546E-6, -2.39908695E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.572466969, -1.99358344, 3.13504643E-7, 0.996010542, 0.0892356858, -8.78567107E-7, -0.0892357007, 0.996010542, 3.08454037E-6, 1.1511147E-6, -2.98023224E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.1)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.1)
+	end
+	for i = 0, 1, 0.06 do
+		swait()
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(6.25098695E-10, -0.0101885581, 0.0232385322, 1, -1.78499682E-9, 2.55053223E-8, 3.6266381E-9, 0.997376442, -0.072389774, -2.53091912E-8, 0.072389774, 0.997376442) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.4983114, 0.114639252, 1, 0, 0, 0, 0.985896468, -0.167356744, 0, 0.167356744, 0.985896468) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RS.C0 = clerp(RS.C0, CFrame.new(0.471262574, 1.0761627, -0.820846975, 0.422495008, 0.635649621, 0.646101713, 0.833141863, -0.553058982, -6.91190362E-4, 0.356893003, 0.538586438, -0.763250947) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LS.C0 = clerp(LS.C0, CFrame.new(-0.404851377, 1.00784791, -0.884761631, 0.332192034, -0.73689574, -0.588755548, -0.86365962, -0.488543153, 0.124167912, -0.379131317, 0.467236847, -0.79871726) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.551400661, -1.9950707, 6.05593868E-6, 0.995295107, -0.0968904421, -6.08721734E-7, 0.0968904421, 0.995295167, 4.24683094E-6, 1.94646418E-7, -4.29153442E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.572459757, -1.99358225, -8.18861736E-7, 0.9960109, 0.0892322063, -8.26967323E-7, -0.0892322063, 0.9960109, 4.23192978E-6, 1.20187178E-6, -4.13507223E-6, 1.00000012) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	sounds(Torso, "153092315", 1.2, 0.9)
+	effect(e, color, Torso.CFrame, 3, 3, 3, 7, 7, 7, 0.02, "Sphere", 7, 0, "", Torso)
+	effect(e, color, Torso.CFrame, 3, 3, 3, 11, 11, 11, 0.025, "Sphere", 7, 0, "", Torso)
+	for i = 0, 1, 0.2 do
+		swait()
+		effect(e, color, Torso.CFrame * CFrame.new(math.random(-200, 200) / 20, -math.random(-200, 200) / 20, math.random(-200, 200) / 20), 20, 20, 20, -0.9, -0.9, -0.9, 0.07, "Sphere", 7, 0, "")
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 2, 2, 2, 1, 1, 1, 0.08, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 4, 4, 4, -0.03, -0.03, -0.03, 0.09, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(2.93596147E-9, -0.101204634, 0.101501822, 1, 2.59090194E-9, 2.54360941E-8, 3.6266381E-9, 0.970419586, -0.24142465, -2.53091912E-8, 0.24142465, 0.970419586) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.49830842, 0.114641547, 1, 0, 0, 0, 0.959734917, -0.280907691, 0, 0.280907691, 0.959734917) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.7816776, 0.404055715, 0.338362396, 0.120604984, -0.921019256, -0.370375693, 0.990183651, 0.0850611404, 0.11090944, -0.0706451088, -0.380116254, 0.922236979) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.73733366, 0.136911795, 0.265080959, 0.341909885, 0.914058745, 0.218160823, -0.932175636, 0.300511867, 0.201844424, 0.118937738, -0.272376776, 0.954811454) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.551396906, -1.99506867, 5.53042628E-6, 0.995295227, -0.0968887061, -2.43908801E-7, 0.0968886986, 0.995295227, 4.2617321E-6, -1.69500709E-7, -4.2617321E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.57246387, -1.99358284, 1.56891178E-6, 0.9960109, 0.0892323107, -3.44021942E-6, -0.0892323107, 0.996010959, 2.10106373E-6, 3.61166894E-6, -1.77323818E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	local sounds = create("Sound")({
+		Parent = Torso,
+		SoundId = "rbxassetid://244578911",
+		Volume = 1.1,
+		PlaybackSpeed = 1.3,
+		Looped = true
+	})
+	sounds:Play()
+	local asd = true
+	for i = 1, 20 do
+		effect(e, color, Torso.CFrame * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 12, 12, 36, -0.2, -0.2, 1, 0.01, "Sphere", 8)
+	end
+	coroutine.resume(coroutine.create(function()
+		while asd == true do
+			swait(math.random(3, 5))
+			laser(ref)
+		end
+	end))
+	for i = 0, 1, 0.004 do
+		swait()
+		effect(e, color, Torso.CFrame * CFrame.new(math.random(-200, 200) / 20, -math.random(-200, 200) / 20, math.random(-200, 200) / 20), 20, 20, 20, -0.9, -0.9, -0.9, 0.07, "Sphere", 7, 0, "")
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.2)
+	end
+	Root.Anchored = false
+	asd = false
+	ref:Remove()
+	sounds:Remove()
+	attack = false
+	ea = false
+	hum.WalkSpeed = Speedz.Value
+	hum.JumpPower = Jumpz.Value
+end
+function idk4()
+	attack = true
+	ea = true
+	hum.WalkSpeed = 0
+	hum.JumpPower = 0
+	sounds(Root, "1452040709", 1.1, 1.1)
+	effect(e, color, RArm.CFrame, 4, 4, 4, 3, 3, 3, 0.04, "Sphere", 3, 0, "", RArm)
+	effect(e, color, LArm.CFrame, 4, 4, 4, 3, 3, 3, 0.04, "Sphere", 3, 0, "", LArm)
+	local aim = CFrame.new(Root.Position, mouse.Hit.p)
+	local direction = aim.lookVector
+	local faceto = math.atan2(direction.x, direction.z)
+	local faceto = math.rad(faceto)
+	for i = 0, 1, 0.06 do
+		swait()
+		effect(e, color, RArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 1, 1, 1, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 1, 1, 1, -0.03, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0, 0, 0, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-7.02577169E-17, 1.50003028, 0, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.27)
+		RS.C0 = clerp(RS.C0, CFrame.new(0.882481039, 1.30737996, -0.529983282, 0.116779037, 0.538202047, 0.834686339, 0.55754298, -0.731034458, 0.393363148, 0.821893215, 0.419436991, -0.38544026) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.27)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.53144681, 0.0919620693, -3.05530193E-7, 0.979219139, 0.202805042, -6.0588427E-6, -0.202805027, 0.979219139, 9.42158294E-7, 6.12400845E-6, 3.0618321E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.27)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.537775517, -1.99813223, 1.53920689E-6, 0.998666584, -0.0516260341, 1.57409113E-6, 0.0516260341, 0.998666584, 3.58724719E-7, -1.59051137E-6, -2.76984792E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.27)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.547253311, -1.99758351, -4.90812113E-7, 0.998603344, 0.05283501, -1.5597418E-6, -0.0528350137, 0.998603344, 3.60629201E-7, 1.57661702E-6, -2.77717845E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.27)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	for i = 0, 1, 0.06 do
+		swait()
+		effect(e, color, RArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0, 0, 0, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(6.35925971E-7, 1.5000298, 3.02803528E-7, 0.82041353, -3.62740549E-9, -0.571770668, 1.73383396E-5, 1, 2.48718261E-5, 0.571770668, -3.03187353E-5, 0.82041353) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RS.C0 = clerp(RS.C0, CFrame.new(2.01162934, 0.490018666, -0.0385836661, -5.15004562E-4, -0.997810245, 0.0661396459, 0.999175489, 0.00217157113, 0.0405414291, -0.040596284, 0.0661059916, 0.996986389) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.53144681, 0.0919620693, -3.05530193E-7, 0.979219139, 0.202805042, -6.0588427E-6, -0.202805027, 0.979219139, 9.42158294E-7, 6.12400845E-6, 3.0618321E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.537775517, -1.99813223, 1.53920689E-6, 0.998666584, -0.0516260341, 1.57409113E-6, 0.0516260341, 0.998666584, 3.58724719E-7, -1.59051137E-6, -2.76984792E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.547253311, -1.99758351, -4.90812113E-7, 0.998603344, 0.05283501, -1.5597418E-6, -0.0528350137, 0.998603344, 3.60629201E-7, 1.57661702E-6, -2.77717845E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	cross(110, 30, 15)
+	cross(155, 50, 15)
+	cross(85, 45, 15)
+	cross(78, 95, 15)
+	cross(60, 60, 15)
+	sounds(Root, "171951986", 1.3, 0.9)
+	sounds(Root, "677958398", 1.2, 1.4)
+	for i = 1, 15 do
+		effect(e, color, RArm.CFrame * CFrame.Angles(math.rad(math.random(-120, -60)), math.rad(math.random(-40, 40)), 0), 6, 6, 13, -0.1, -0.1, 2, math.random(40, 60) / 1000, "Sphere", 4, -0.7)
+	end
+	for i = 1, 30 do
+		swait()
+		effect(e, color, RArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	for i = 0, 1, 0.06 do
+		swait()
+		effect(e, color, RArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0, 0, 0, 0.99999994, -3.23780114E-10, -1.49011612E-8, -3.23780114E-10, 1, -5.82076609E-11, -1.49011612E-8, -5.82076609E-11, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-1.65550227E-6, 1.50003004, 2.17576053E-6, 0.82041353, 3.59796104E-9, 0.571770668, -1.73385924E-5, 1, 2.48719152E-5, -0.571770668, -3.03187408E-5, 0.82041353) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.53144658, 0.0919623077, -3.063451E-7, 0.979219019, -0.202805027, 6.04987144E-6, 0.202805027, 0.979219139, 9.42090992E-7, -6.12437725E-6, 3.0733645E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LS.C0 = clerp(LS.C0, CFrame.new(-2.01162744, 0.490019172, -0.0385830924, -5.1500462E-4, 0.997810185, -0.0661396384, -0.999175549, 0.00217157113, 0.0405414328, 0.040596284, 0.0661059916, 0.996986449) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.547249436, -1.99758375, -6.18239142E-7, 0.998603165, -0.0528350174, 1.56462193E-6, 0.05283501, 0.998603344, 3.60712875E-7, -1.59442425E-6, -2.77534127E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.537781239, -1.99813187, 1.77703009E-6, 0.998666525, 0.0516260229, -1.57952309E-6, -0.0516260341, 0.998666525, 3.58792022E-7, 1.59442425E-6, -2.77534127E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	cross(-110, 30, 15)
+	cross(-155, 50, 15)
+	cross(-85, 45, 15)
+	cross(-78, 95, 15)
+	cross(-60, 60, 15)
+	sounds(Root, "171951986", 1.3, 0.9)
+	sounds(Root, "677958398", 1.2, 1.4)
+	for i = 1, 15 do
+		effect(e, color, LArm.CFrame * CFrame.Angles(math.rad(math.random(-120, -60)), math.rad(math.random(-40, 40)), 0), 6, 6, 13, -0.1, -0.1, 2, math.random(40, 60) / 1000, "Sphere", 4, -0.7)
+	end
+	for i = 1, 30 do
+		swait()
+		effect(e, color, RArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	for i = 0, 1, 0.06 do
+		swait()
+		effect(e, color, RArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0, 0, 0, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0.00555853918, 1.45657051, 0.114014417, 0.998813868, 0.0173271243, 0.0455058254, -1.4726877E-6, 0.934556127, -0.355815828, -0.0486930199, 0.355393767, 0.93344748) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.52368629, 1.44312656, -0.0835164264, -0.992180765, -0.105841897, 0.0661421046, 0.108658843, -0.993252039, 0.0405422114, 0.0614047125, 0.0474121273, 0.99698621) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.62832916, 1.17450833, -0.0532863513, -0.958373368, 0.264909595, -0.10650529, -0.266317219, -0.96388489, -0.00104230037, -0.102934942, 0.0273652803, 0.994311631) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.537775517, -1.99813223, 1.53920689E-6, 0.998666584, -0.0516260341, 1.57409113E-6, 0.0516260341, 0.998666584, 3.58724719E-7, -1.59051137E-6, -2.76984792E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.547253311, -1.99758351, -4.90812113E-7, 0.998603344, 0.05283501, -1.5597418E-6, -0.0528350137, 0.998603344, 3.60629201E-7, 1.57661702E-6, -2.77717845E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	cross(25, 65, 15)
+	cross(0, 70, 15)
+	cross(-25, 65, 15)
+	cross(45, 100, 15)
+	cross(0, 115, 15)
+	cross(-45, 100, 15)
+	sounds(Root, "171951986", 1.3, 0.9)
+	sounds(Root, "677958398", 1.2, 1.4)
+	for i = 1, 15 do
+		effect(e, color, RArm.CFrame * CFrame.Angles(math.rad(math.random(-120, -60)), math.rad(math.random(-40, 40)), 0), 6, 6, 13, -0.1, -0.1, 2, math.random(40, 60) / 1000, "Sphere", 4, -0.7)
+		effect(e, color, LArm.CFrame * CFrame.Angles(math.rad(math.random(-120, -60)), math.rad(math.random(-40, 40)), 0), 6, 6, 13, -0.1, -0.1, 2, math.random(40, 60) / 1000, "Sphere", 4, -0.7)
+	end
+	for i = 1, 30 do
+		swait()
+		effect(e, color, RArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	hum.AutoRotate = false
+	for i = 0, 1, 0.07 do
+		swait()
+		aim = CFrame.new(Root.Position, mouse.Hit.p)
+		direction = aim.lookVector
+		faceto = math.atan2(direction.x, direction.z)
+		faceto = math.deg(faceto)
+		Root.CFrame = clerp(Root.CFrame, CFrame.new(Root.Position) * CFrame.Angles(0, math.rad(faceto - 180), 0), 0.4)
+		effect(e, color, RArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(-0.0032087341, 5.37661708E-6, 0.177336842, 0.678973198, -3.62740549E-9, -0.734163165, 2.22613617E-5, 1, 2.05829456E-5, 0.734163165, -3.03187353E-5, 0.678973198) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-0.0207656622, 1.45656574, -0.072946012, 0.642415345, 0.109185137, 0.758538902, 0, 0.989798665, -0.142472997, -0.766356766, 0.0915268287, 0.635861874) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.44048297, 1.14310956, 0.292930722, -0.987999797, -0.154455602, -1.78933144E-4, 0.13444902, -0.859453261, -0.493217707, 0.0760263801, -0.487323046, 0.869906068) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.61347079, 0.152408883, -0.279574752, 0.936204076, 0.308325887, -0.168692797, -0.332304001, 0.932840705, -0.139220104, 0.114438355, 0.186395705, 0.975787282) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.567552686, -1.99659479, 0.0443559587, 0.829245806, -0.0516246483, 0.556494772, 0.042883005, 0.998666644, 0.0287428647, -0.557236552, 2.92640179E-5, 0.830353916) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.59369868, -1.99483037, -0.067409426, 0.78510946, 0.00921099819, 0.619288683, 0.0141359996, 0.999362469, -0.0327850841, -0.619195938, 0.034494143, 0.784478664) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	local idk = create("Model")({Parent = chr, Name = "a"})
+	game:GetService("Debris"):AddItem(idk, 7)
+	while idk.Parent ~= nil do
+		swait()
+		coroutine.resume(coroutine.create(function()
+			for _, sa in pairs(chr:children()) do
+				if sa.Name == "Effect2" then
+					for _, ss in pairs(sa:children()) do
+						if ss:IsA("Part") and ss:findFirstChild("what") ~= nil then
+							ss:findFirstChild("what").Value = true
+							swait(8)
+						end
+					end
+				end
+			end
+		end))
+		aim = CFrame.new(Root.Position, mouse.Hit.p)
+		direction = aim.lookVector
+		faceto = math.atan2(direction.x, direction.z)
+		faceto = math.deg(faceto)
+		Root.CFrame = clerp(Root.CFrame, CFrame.new(Root.Position) * CFrame.Angles(0, math.rad(faceto - 180), 0), 0.4)
+		effect(e, color, RArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", RArm)
+		effect(e, color, LArm.CFrame, 1, 1, 1, 0.8, 0.8, 0.8, 0.07, "Brick", 3, 0, "", LArm)
+		effect(e, color, RArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		effect(e, color, LArm.CFrame * CFrame.new(0, -2, 0), 3, 3, 3, -0.02, -0.02, -0.02, 0.08, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(3.86958563E-5, -6.21262819E-10, -2.0495685E-5, 0.181532949, -3.62740549E-9, 0.983384907, -2.98143277E-5, 1, 5.50741743E-6, -0.983384907, -3.03187353E-5, 0.181532964) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-7.19278978E-5, 1.50003099, -2.55080686E-5, 0.181532949, -2.98143277E-5, -0.983384907, -3.62740549E-9, 1, -3.03187353E-5, 0.983384907, 5.50741743E-6, 0.181532964) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(2.02105093, 0.473393738, -0.0869135708, -0.00513915811, -0.98644489, 0.1640127, 0.999986768, -0.00511675095, 5.59083477E-4, 2.87707138E-4, 0.164013401, 0.986458242) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.91037929, 0.189958677, -0.162581474, 0.261600614, 0.931098819, -0.254205167, -0.953407466, 0.29029125, 0.0821299329, 0.150264606, 0.220875859, 0.963656843) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.629153252, -1.99374163, -0.0230616257, 0.175377369, -0.0935885608, -0.980042875, 0, 0.995471358, -0.0950618908, 0.984501302, 0.0166717079, 0.174583152) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.500012934, -2.00008202, -5.53168356E-5, 0.994970024, 0, -0.100174665, 0, 1, 0, 0.100174651, 0, 0.994970024) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.2)
+	end
+	attack = false
+	ea = false
+	hum.AutoRotate = true
+	hum.WalkSpeed = Speedz.Value
+	hum.JumpPower = Jumpz.Value
+end
+function idk5()
+	attack = true
+	ea = true
+	hum.WalkSpeed = 0
+	hum.JumpPower = 0
+	local as = Cube.CFrame:toObjectSpace(main.CFrame):inverse()
+	CubeWeld.C0 = as
+	CubeWeld.Part0 = Root
+	for i = 0, 1, 0.06 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0, 0, 0, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-7.08511694E-9, 1.5248028, -0.0614484102, 1, -7.92468136E-9, 2.430858E-8, 3.6266381E-9, 0.98510468, 0.171955869, -2.53091912E-8, -0.171955854, 0.98510468) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.01360452, 0.314717412, -0.964502871, -0.102373019, 0.455167085, 0.884501517, 0.955503702, 0.292279512, -0.0398170017, -0.276645005, 0.841068208, -0.464835376) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		LS.C0 = clerp(LS.C0, CFrame.new(-0.961258531, 0.212291256, -1.08033454, -0.0551560074, -0.47205919, -0.879839718, -0.934927762, 0.333764195, -0.12046463, 0.350525469, 0.815942168, -0.459750235) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.500011444, -2.00008392, 2.14576721E-6, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.500024796, -2.00008202, 2.38418579E-7, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.24)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.00100142497, -0.237021729, -2.67724061, -1, 2.53090811E-8, -3.64420849E-9, -3.6646095E-9, 3.03187389E-5, 0.999993742, 2.5309193E-8, 1, -3.03185625E-5) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.4)
+	end
+	sounds(Cube, "1452040709", 1.1, 1.1)
+	sounds(Cube, "169380469", 1, 1.5)
+	effect(e, color, Cube.CFrame, 120, 120, 120, -4, -4, -4, -0.04, "Sphere", 5, 0, "", Cube)
+	for i = 1, 50 do
+		swait()
+		effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-1, 1) * 12, math.random(-1, 1) * 12, math.random(-1, 1) * 12), Cube.Position), 10, 10, 50, -0.2, -0.2, -0.5, 0.05, "Sphere", 4, -0.8)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.00100142497, -0.237021729, -2.67724061, -1, 2.53090811E-8, -3.64420849E-9, -3.6646095E-9, 3.03187389E-5, 0.999993742, 2.5309193E-8, 1, -3.03185625E-5) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.4)
+	end
+	for i = 0, 1, 0.07 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(8.76560807E-6, -0.00926997699, -0.0957849473, 0.860068023, 3.05583683E-7, 0.5101794, -0.0977521837, 0.981472611, 0.16479145, -0.500727057, -0.19160302, 0.844133079) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(7.15255737E-6, 1.50003064, 6.77853823E-5, 0.835273564, 0.0386304259, -0.548475921, -8.62404704E-7, 0.997529089, 0.0702569783, 0.549834609, -0.0586833209, 0.833209574) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.81718063, 0.139537707, -0.474254161, 0.327438653, -0.838637173, 0.435283452, 0.941962659, 0.325855076, -0.0807767957, -0.0740968883, 0.436470121, 0.896662474) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.49201059, 0.0123441443, -0.250469953, 0.972206593, 0.225295797, -0.0636894405, -0.234125048, 0.935537219, -0.264491558, -4.94718552E-6, 0.272051692, 0.962282538) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.770325899, -1.97614884, -0.523997486, 0.888705194, -0.170560509, -0.425572813, 1.70618296E-6, 0.928228617, -0.372010648, 0.458479077, 0.330607057, 0.824921787) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.58283335, -2.08035302, 0.163205251, 0.979240298, 0.104519136, -0.173678368, -0.0708060488, 0.979214668, 0.190066874, 0.189934015, -0.17382367, 0.966286898) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.2)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(-0.00100142497, -0.237021729, -2.67724061, -1, 2.53090811E-8, -3.64420849E-9, -3.6646095E-9, 3.03187389E-5, 0.999993742, 2.5309193E-8, 1, -3.03185625E-5) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.4)
+	end
+	sounds(Root, "346009296", 1, 0.9)
+	sounds(Root, "212607246", 1, 0.9)
+	local refs = parts(e, "ref", Vector3.new(0.1, 0.1, 0.1), "Institutional white", Enum.Material.SmoothPlastic, 0, 1)
+	local refz = parts(e, "ref", Vector3.new(0.1, 0.1, 0.1), "Institutional white", Enum.Material.SmoothPlastic, 0, 1)
+	local refWeld = welds(refs, "refWeld", refz, refs, CFrame.new(0, 0, 0), CFrame.new(0, 0, 0))
+	refz.Anchored = true
+	refz.CFrame = CFrame.new(Root.Position)
+	refs.CFrame = refz.CFrame
+	local hal = 11
+	local has = 5
+	coroutine.resume(coroutine.create(function()
+		as = Cube.CFrame:toObjectSpace(refs.CFrame):inverse()
+		CubeWeld.C0 = as
+		CubeWeld.Part0 = refs
+		for i = 0, 1, 0.004 do
+			swait()
+			hal = hal + 17
+			has = has + 0.6
+			coroutine.resume(coroutine.create(function()
+				local refasd = parts(e, "ref", Vector3.new(0.1, 0.1, 0.1), "Really black", Enum.Material.Neon, 0, 0.5)
+				meshs(refasd, "Mesh", Vector3.new(50, 50, 50), Enum.MeshType.Sphere, "")
+				refasd.CFrame = CFrame.new(Cube.Position)
+				refasd.Anchored = true
+				local refasdz = parts(e, "ref", Vector3.new(0.1, 0.1, 0.1), "Really black", Enum.Material.Neon, 0, 0.5)
+				meshs(refasdz, "Mesh", Vector3.new(60, 60, 60), Enum.MeshType.Sphere, "")
+				refasdz.CFrame = CFrame.new(Cube.Position)
+				refasdz.Anchored = true
+				local ree2 = Efect:Clone()
+				ree2.Parent = refasd
+				ree2.VelocitySpread = 1000
+				ree2.Rate = 1000
+				ree2.Speed = NumberRange.new(50)
+				ree2.Texture = "rbxassetid://243660364"
+				ree2.Enabled = false
+				ree2.Lifetime = NumberRange.new(0.7, 1.5)
+				ree2.Size = NumberSequence.new({
+					NumberSequenceKeypoint.new(0, 22),
+					NumberSequenceKeypoint.new(1, 22)
+				})
+				ree2.Color = ColorSequence.new(BrickColor.new("Really black").Color)
+				sounds(refasd, "202957303", 1, 1.7)
+				for i = 0, 100 do
+					swait(2)
+					refasd.Mesh.Scale = refasd.Mesh.Scale + Vector3.new(-0.3, -0.3, -0.3)
+					refasdz.Mesh.Scale = refasdz.Mesh.Scale + Vector3.new(-0.4, -0.4, -0.4)
+				end
+				coroutine.resume(coroutine.create(function()
+					ree2.Enabled = true
+					swait(4)
+					ree2.Enabled = false
+				end))
+				refasd.Transparency = 1
+				refasdz.Transparency = 1
+				sounds(refasd, "296821866", 1, 1.3)
+				effect(e, "Really black", refasd.CFrame, 40, 40, 40, 16, 16, 16, 0.03, "Sphere", 7, 0, "")
+				effect(e, "Really black", refasd.CFrame, 40, 40, 40, 16, 16, 16, 0.04, "Brick", 1, 0, "")
+				effect(e, "Really black", refasd.CFrame * CFrame.Angles(math.rad(math.random(-15, 15)), math.rad(math.random(-15, 15)), math.rad(90)), 29999, 40, 40, 0, -0.9, -0.9, 0.03, "Cylinder", 7, 0, "")
+				Mdamage("None", refasd, 35, math.random(2, 4), 0, "")
+				game:GetService("Debris"):AddItem(refasd, 5)
+				game:GetService("Debris"):AddItem(refasdz, 5)
+			end))
+			refs.CFrame = clerp(refs.CFrame, refz.CFrame * CFrame.Angles(0, -math.rad(hal), 0), 0.4)
+			CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0, -has * 2) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.4)
+			effect(e, color, Cube.CFrame, 10, 10, 10, 4, 4, 4, 0.065, "Sphere", 7, 0, "")
+			effect(e, color, CFrame.new(Cube.Position) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 22, 22, 75, -0.2, -0.2, 0.7, 0.03, "Sphere", 4, -2)
+			effect(e, color, CFrame.new(Cube.Position) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 12, 22, 75, -0.2, -0.2, 0.7, 0.03, "Sphere", 4, -2)
+			effect(e, color, CFrame.new(Cube.Position) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 22, 22, 75, -0.2, -0.2, 0.7, 0.03, "Sphere", 4, -2)
+		end
+		game:GetService("Debris"):AddItem(refs, 3)
+		game:GetService("Debris"):AddItem(refz, 3)
+		ea = false
+		as = Cube.CFrame:toObjectSpace(main.CFrame):inverse()
+		CubeWeld.C0 = as
+	end))
+	for i = 0, 1, 0.03 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0, 0, 0, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, math.rad(0 - 1080 * i), 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-7.02577169E-17, 1.50003028, 2.38418579E-7, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(2.00854349, 0.626493692, -3.53361975E-5, -0.126912981, -0.991913855, 2.30974274E-6, 0.991913855, -0.126912981, 1.24642884E-5, -1.20703626E-5, 3.8729454E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.89202809, 0.336753607, -1.42028584E-5, 0.128545955, 0.991703629, -1.28668307E-5, -0.991703629, 0.128545955, 2.86476388E-5, 3.00639458E-5, 9.07754475E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.553662241, -1.99772871, 1.85905822E-6, 0.999037206, -0.0438730158, 1.3414998E-6, 0.0438730158, 0.999037206, 3.4761797E-7, -1.35545906E-6, -2.88428055E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.5365839, -2.00429654, -1.05056728E-7, 0.99940598, 0.0344639979, -1.00861087E-6, -0.0344639979, 0.99940598, 3.36558514E-7, 1.01961075E-6, -3.01599357E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+	end
+	for i = 0, 1, 0.06 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(-1.51135027E-5, -0.0169577114, -0.12904036, 0.963360786, 1.43983891E-6, -0.268208772, 0.0692268386, 0.966114759, 0.248656362, 0.259120822, -0.258113027, 0.930716991) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(2.48522483E-5, 1.50002551, 4.04907005E-5, 0.963360786, 6.83218241E-6, 0.268208802, 1.4498753E-6, 1, -3.06665897E-5, -0.268208802, 2.9951334E-5, 0.963360846) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.93286002, 0.651803792, 0.414495111, -0.162502438, -0.911595225, -0.377607226, 0.975923359, -0.204918295, 0.074714154, -0.145487666, -0.356374413, 0.922946692) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.79021287, 0.186372221, -0.377411216, 0.292690486, 0.84755677, -0.442696035, -0.940179348, 0.339496374, 0.0283737034, 0.174342036, 0.407909006, 0.896222711) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.759870648, -2.00134444, 0.0887652412, 0.955415726, -0.265393078, 0.129411131, 0.249939919, 0.960280299, 0.124063641, -0.157196581, -0.0861873329, 0.983799219) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.7191149, -1.96446908, -0.581376314, 0.960569501, 0.224111602, 0.164561123, -0.113025486, 0.855493665, -0.505327463, -0.254030734, 0.466802478, 0.847091496) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+	end
+	attack = false
+	hum.WalkSpeed = Speedz.Value
+	hum.JumpPower = Jumpz.Value
+end
+function idk6()
+	attack = true
+	ea = true
+	hum.WalkSpeed = 0
+	hum.JumpPower = 0
+	local as = Cube.CFrame:toObjectSpace(Root.CFrame):inverse()
+	CubeWeld.C0 = as
+	CubeWeld.Part0 = Root
+	for i = 0, 1, 0.08 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0, 0, 0, 1, -4.68375339E-17, 0, -4.68375339E-17, 1, 0, 0, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-1.18269261E-8, 1.59803832, -0.238309443, 1, -1.36319169E-8, 2.16305018E-8, 3.6266381E-9, 0.913081765, 0.407776743, -2.53091912E-8, -0.407776743, 0.913081765) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		RS.C0 = clerp(RS.C0, CFrame.new(0.935031891, 0.167936713, -0.90466702, 0.112751037, 0.478149742, 0.871011019, 0.886120737, 0.348199755, -0.305854559, -0.449530095, 0.806306303, -0.384438515) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		LS.C0 = clerp(LS.C0, CFrame.new(-0.763348937, 0.171211839, -0.967803955, -0.046984978, -0.714454174, -0.698102951, -0.868298888, 0.374705911, -0.325042516, 0.49381125, 0.590889871, -0.637965202) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.573199809, -1.99484134, 3.3606575E-6, 0.99744612, -0.071423009, 2.16799958E-6, 0.071423009, 0.99744612, 3.95350071E-7, -2.19069989E-6, -2.39493602E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.550958276, -1.99670148, -3.12252155E-7, 0.997807503, 0.0661830306, -1.96018254E-6, -0.0661830306, 0.997807503, 3.84496161E-7, 1.98133216E-6, -2.53923645E-7, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0.114856653, -0.633682966, -2.59335303, -1, 2.53090811E-8, -3.64420849E-9, -3.6646095E-9, 3.03187389E-5, 0.999993742, 2.5309193E-8, 1, -3.03185625E-5) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.25)
+	end
+	sounds(Cube, "1452040709", 1.1, 0.8)
+	sounds(Cube, "93724183", 1, 1.7)
+	effect(e, color, Cube.CFrame, 230, 230, 230, -4, -4, -4, -0.02, "Sphere", 5, 0, "", Torso)
+	for i = 1, 100 do
+		swait()
+		effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-3, 3) * 15, math.random(-3, 3) * 15, math.random(-3, 3) * 15), Cube.Position), 24, 24, 90, -0.2, -0.2, -0.6, 0.04, "Sphere", 4, -1.4)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0.114856653, -0.633682966, -2.59335303, -1, 2.53090811E-8, -3.64420849E-9, -3.6646095E-9, 3.03187389E-5, 0.999993742, 2.5309193E-8, 1, -3.03185625E-5) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.25)
+	end
+	sounds(Root, "860448713", 1.1, 0.8)
+	local refs = parts(e, "ref", Vector3.new(0.1, 0.1, 0.1), "Institutional white", Enum.Material.SmoothPlastic, 0, 1)
+	local refz = parts(e, "ref", Vector3.new(0.1, 0.1, 0.1), "Institutional white", Enum.Material.SmoothPlastic, 0, 1)
+	local refWeld = welds(refs, "refWeld", refz, refs, CFrame.new(0, 0, 0), CFrame.new(0, 0, 0))
+	refz.Anchored = true
+	refz.CFrame = CFrame.new(Root.Position + Vector3.new(0, 700, 0))
+	refs.CFrame = refz.CFrame
+	as = Cube.CFrame:toObjectSpace(refs.CFrame):inverse()
+	CubeWeld.C0 = as
+	CubeWeld.Part0 = refs
+	coroutine.resume(coroutine.create(function()
+		coroutine.resume(coroutine.create(function()
+			while ea == true do
+				swait()
+				CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.05)
+			end
+		end))
+		for i = 1, 150 do
+			swait()
+			effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-3, 3) * 15, math.random(-3, 3) * 15, math.random(-3, 3) * 15), Cube.Position), 24, 24, 90, -0.2, -0.2, -0.6, 0.04, "Sphere", 4, -1.4)
+		end
+		local ball = parts(e, "ref", Vector3.new(0.2, 0.2, 0.2), "Institutional white", Enum.Material.Neon, 0, 0)
+		meshs(ball, "Mesh", Vector3.new(0, 0, 0), Enum.MeshType.Sphere, "")
+		ball.CFrame = CFrame.new(Cube.Position)
+		ball.Anchored = true
+		local sas = 0
+		sounds(chr, "93724183", 1.2, 0.8)
+		for i = 1, 400 do
+			swait()
+			sas = sas + 5
+			effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-sas, sas) / 4, math.random(-sas, sas) / 4, math.random(-sas, sas) / 4), Cube.Position), sas / 3, sas / 3, sas * 1.8, 0, 0, 15, 0.03, "Sphere", 4, -sas / 150)
+			ball.Mesh.Scale = Vector3.new(sas * 1.2, sas * 1.2, sas * 1.2)
+		end
+		swait(120)
+		sounds(chr, "1424285543", 2, 0.9)
+		coroutine.resume(coroutine.create(function()
+			local hit
+			for i = 1, 1000 do
+				swait()
+				ball.CFrame = ball.CFrame * CFrame.new(0, -3, 0)
+				effect(e, color, CFrame.new(ball.Position + Vector3.new(math.random(-700, 700), math.random(0, 700), math.random(-700, 700))) * CFrame.Angles(math.rad(90), 0, 0), 330, 330, 1120, 0, 0, 0, 0.03, "Sphere", 4, -15)
+				hit, pos = rayCast(ball.Position, CFrame.new(ball.Position, ball.Position - Vector3.new(0, 1, 0)).lookVector, 2, chr)
+				if hit ~= nil then
+					break
+				end
+			end
+			ball.Anchored = true
+			sounds(chr, "1196176156", 2, 0.6)
+			sounds(chr, "151304356", 2, 0.8)
+			sounds(chr, "239000203", 2, 0.7)
+			sounds(chr, "138213851", 2, 0.7)
+			effect(e, color, ball.CFrame, 15, 15, 15, 33, 33, 33, 0.003, "Brick", 1, 0, "")
+			effect(e, color, ball.CFrame, 15, 15, 15, 33, 33, 33, 0.003, "Brick", 1, 0, "")
+			for i = 1, 220 do
+				swait(2)
+				sas = sas - 7
+				effect(e, "Institutional white", CFrame.new(ball.Position + Vector3.new(math.random(-700, 700), math.random(0, 700), math.random(-700, 700))) * CFrame.Angles(math.rad(math.random(-120, -60)), 0, 0), 370, 370, 820, -2, -2, 23, 0.035, "Sphere", 4, 25)
+				effect(e, "Institutional white", CFrame.new(ball.Position + Vector3.new(math.random(-900, 900), math.random(-900, 900), math.random(-900, 900))), 130, 130, 130, 13, 13, 13, 0.04, "Sphere", 7)
+				effect(e, "Institutional white", ball.CFrame, 88, 88, 88, 55 - i / 90, 55 - i / 90, 55 - i / 90, 0.007, "Brick", 1, 0, "")
+				effect(e, "Institutional white", ball.CFrame, 88, 88, 88, 53 - i / 100, 53 - i / 100, 53 - i / 100, 0.007, "Sphere", 1, 0, "")
+				effect(e, "Institutional white", CFrame.new(ball.Position) * CFrame.Angles(0, math.rad(-360, 360), 0), 9, 3, 9, 15, 2, 15, 0.03, "FileMesh", 2, math.random(-15, 15), "20329976")
+				Mdamage("None", ball, 600, math.random(2, 3) / 2, 0, "")
+				ball.Mesh.Scale = Vector3.new(sas * 1.2, sas * 1.2, sas * 1.2)
+			end
+			ball.Transparency = 1
+			ea = false
+			game:GetService("Debris"):AddItem(ball, 25)
+			while ball.Parent ~= nil do
+				swait()
+				effect(e, "Institutional white", CFrame.new(ball.Position + Vector3.new(math.random(-500, 500), 0, math.random(-500, 500))), 130, 130, 130, -9, -9, -9, 0.05, "Sphere", 7)
+				effect(e, "Institutional white", CFrame.new(ball.Position + Vector3.new(math.random(-700, 700), math.random(0, 700), math.random(-700, 700))) * CFrame.Angles(math.rad(math.random(-120, -60)), 0, 0), 120, 120, 320, -3, -3, 0, 0.045, "Sphere", 4, 15)
+			end
+		end))
+	end))
+	for i = 0, 1, 0.011 do
+		swait()
+		effect(e, color, CFrame.new(Cube.Position + Vector3.new(math.random(-3, 3) * 15, math.random(-3, 3) * 15, math.random(-3, 3) * 15), Cube.Position), 24, 24, 90, -0.2, -0.2, -0.6, 0.04, "Sphere", 4, -1.4)
+		RJ.C0 = clerp(RJ.C0, CFrame.new(5.60548363E-9, -0.00683021173, 0.220501453, 1, 1.98701233E-9, 2.54903814E-8, 3.6266381E-9, 0.975871623, -0.218345404, -2.53091912E-8, 0.218345404, 0.975871623) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.56777215, 0.280440956, 1, 0, 0, 0, 0.888991058, -0.457924604, 0, 0.457924604, 0.888991058) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.51177466, 1.32061362, -0.31437552, -0.996572375, -0.0827109739, -0.00156320585, 0.0767201483, -0.931128025, 0.35653156, -0.0309446175, 0.355189562, 0.934282124) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.43404579, 1.24946916, -0.432269305, -0.946924448, 0.168695942, -0.273634642, -0.259140074, -0.90429157, 0.339268923, -0.190212205, 0.392171741, 0.900011599) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.573199749, -1.98818827, 0.21889478, 0.99744612, -0.071423009, 2.14269039E-6, 0.0696992129, 0.973379314, 0.218345791, -0.0155969998, -0.217788011, 0.975871563) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.550957859, -1.99000478, 0.219297409, 0.997807503, 0.0661830306, -1.98549174E-6, -0.0645857006, 0.973731995, 0.218345791, 0.0144527191, -0.217866927, 0.975871563) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.3)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.05)
+	end
+	attack = false
+	hum.WalkSpeed = Speedz.Value
+	hum.JumpPower = Jumpz.Value
+end
+function idk7()
+	attack = true
+	ea = true
+	hum.WalkSpeed = 0
+	hum.JumpPower = 0
+	for i = 0, 1, 0.08 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(-4.33606218E-9, -1.62866163, -0.404699862, 1, -2.26156054E-8, 1.19265309E-8, 3.6266381E-9, 0.587218821, 0.809428275, -2.53091912E-8, -0.809428275, 0.587218821) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.49420226, -0.157599151, 1, 0, 0, 0, 0.956930518, 0.290317386, 0, -0.290317386, 0.956930518) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.60326719, 0.165573373, -0.843753278, 0.990470767, -0.137723103, -1.555891E-6, 0.0452935956, 0.325751096, -0.944370091, 0.130062088, 0.935370922, 0.328884929) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.41393173, 0.213934481, -0.859694719, 0.992489755, 0.122327819, 1.15259127E-6, -0.0508138947, 0.412280053, -0.90963912, -0.111274637, 0.902807415, 0.415399671) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.731951952, -1.99554384, 0.309756339, 0.963482261, -0.266114831, 0.0297494642, 0.242933348, 0.915426612, 0.320901513, -0.112630107, -0.30195576, 0.946645319) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.645229697, -1.98440266, 0.11164809, 0.986837983, 0.160791233, 0.0172375161, -0.161712557, 0.981214285, 0.105202943, 2.01165676E-6, -0.106605768, 0.994301438) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.25)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.1)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.1)
+	end
+	hum.JumpPower = 60
+	sounds(Root, "1452040709", 1.1, 0.8)
+	sounds(Root, "93724183", 1, 1.7)
+	effect(e, color, Torso.CFrame, 230, 230, 230, -4, -4, -4, -0.02, "Sphere", 5, 0, "", Torso)
+	for i = 1, 120 do
+		swait()
+		effect(e, color, CFrame.new(Torso.Position + Vector3.new(math.random(-1, 1) * 22, math.random(-1, 1) * 22, math.random(-1, 1) * 22), Torso.Position), 24, 24, 90, -0.2, -0.2, -0.6, 0.04, "Sphere", 4, -1.3)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.1)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.1)
+	end
+	sounds(Root, "417101384", 1.4, 1.3)
+	hum.Jump = true
+	Torso.Velocity = Root.CFrame.lookVector * 0 + Vector3.new(0, 1, 0) * 400
+	local ggga = 0
+	coroutine.resume(coroutine.create(function()
+		while ggga <= 360 do
+			swait()
+			ggga = ggga + 12
+		end
+	end))
+	for i = 0, 1, 0.012 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(1.27942856E-9, -0.0025275033, 0.0501897596, 1, -1.06778786E-9, 2.55454005E-8, 3.6266381E-9, 0.994949162, -0.100379847, -2.53091912E-8, 0.100379847, 0.994949162) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-ggga), 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.46451819, 0.136381671, 1, 0, 0, 0, 0.96773237, -0.251980543, 0, 0.251980543, 0.96773237) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.60655272, 0.140721351, -2.50170851E-5, 0.967689216, -0.252146065, 4.00024828E-6, 0.252146035, 0.967689216, -3.4570694E-6, -3.00072134E-6, 4.35858965E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.60588777, 0.182476342, 3.46600791E-6, 0.912787139, 0.408435762, -5.3364829E-6, -0.408435732, 0.91278708, -2.41473317E-5, -4.991889E-6, 2.42218375E-5, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.500007629, -2.04610825, 0.225123167, 1, 0, 0, 0, 0.968374431, 0.249501422, 0, -0.249501422, 0.968374431) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.543848097, -1.17281246, -0.246499091, 0.99947387, 0.0324356109, 3.94547556E-7, -0.0310850926, 0.957855463, 0.285563946, 0.00926206261, -0.285413712, 0.958359659) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.1)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.1)
+	end
+	Root.Anchored = true
+	effect(e, color, Cube.CFrame, 160, 160, 160, -4, -4, -4, -0.03, "Sphere", 5, 0, "", Cube)
+	sounds(Root, "260105791", 1.1, 0.7)
+	for i = 0, 1, 0.09 do
+		swait()
+		effect(e, color, Cube.CFrame, 1, 1, 1, 2.5, 2.5, 2.5, 0.08, "Brick", 1, 0, "", Cube)
+		effect(e, color, Cube.CFrame, 1, 1, 1, 2, 2, 2, 0.07, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(0, 0, 0, 1, -7.49400542E-16, -8.07793567E-28, -7.49400542E-16, 1, 0, -8.07793567E-28, 0, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0 + 360 * i), 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(-5.07897525E-16, 1.35547674, 0.293656737, 1, -3.36172527E-16, 1.6549425E-16, -3.74700271E-16, 0.8971771, -0.441671014, 0, 0.441671014, 0.8971771) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(0.491798192, 0.455383539, -0.829198778, -2.29999896E-5, 0.871873975, 0.489730388, 0.999458492, 0.0161336232, -0.0286759902, -0.0329029709, 0.489464521, -0.871402323) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LS.C0 = clerp(LS.C0, CFrame.new(-0.49329561, 0.39801085, -0.744671464, -0.0053679999, -0.847378671, -0.53096205, -0.971409917, 0.130445272, -0.198360741, 0.237348139, 0.514716923, -0.823852181) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.551766038, -1.01557636, -0.299912155, 0.997343361, -0.0701758265, -0.019534722, 0.072844021, 0.960803688, 0.26748842, -2.18532068E-6, -0.268200755, 0.963363051) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.491308749, -1.03797925, -0.380889565, 0.998696566, 0.0510426499, -6.98094311E-7, -0.0485015512, 0.948981762, 0.311578691, 0.0159044638, -0.311172485, 0.950220346) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.1)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.1)
+	end
+	sounds(Cube, "169380469", 1.5, 0.9)
+	local as = Cube.CFrame:toObjectSpace(LLeg.CFrame):inverse()
+	CubeWeld.C0 = as
+	CubeWeld.Part0 = LLeg
+	for i = 0, 1, 0.01 do
+		swait()
+		effect(e, color, CFrame.new(Cube.Position) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 11, 11, 90, -0.4, -0.4, -2, 0.03, "Sphere", 4, -3)
+		effect(e, color, CFrame.new(Cube.Position) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 22, 22, 70, -0.4, -0.4, 0, 0.02, "Sphere", 8)
+		effect(e, color, Cube.CFrame, 1, 1, 1, 2.5, 2.5, 2.5, 0.08, "Brick", 1, 0, "", Cube)
+		effect(e, color, Cube.CFrame, 1, 1, 1, 2, 2, 2, 0.07, "Brick", 1, 0, "")
+		RJ.C0 = clerp(RJ.C0, CFrame.new(4.86139811E-7, -0.140436232, 0.347435653, 1, 1.49779016E-8, 2.07212487E-8, 3.6266381E-9, 0.719157219, -0.694847345, -2.53091912E-8, 0.694847345, 0.719157219) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.56305528, -0.257416815, 1, 0, 0, 0, 0.889561772, 0.456814885, 0, -0.456814885, 0.889561832) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.57813752, 0.974923313, -0.0414462686, 0.944944143, -0.327231765, -1.90215701E-6, -0.322248161, -0.930552185, -0.173864692, 0.0568922907, 0.164292991, -0.984769583) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.65801013, 1.06233311, -0.139169589, 0.912198901, 0.385365069, 0.139236882, 0.398512214, -0.913422823, -0.0827451348, 0.0952950418, 0.130967587, -0.986796021) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.500015259, -0.911290526, -0.474949211, 1, 0, 0, 0, 0.916592062, 0.399823666, 0, -0.399823695, 0.916592062) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.500022888, -1.99482846, -0.0717773512, 1, 0, 0, 0, 0.997329473, -0.0730338395, 0, 0.0730338395, 0.997329473) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, -3.5, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.4)
+	end
+	sounds(Cube, "724904609", 1.5, 0.8)
+	sounds(Cube, "282812192", 1.3, 1.8)
+	Root.Anchored = false
+	local hit
+	local soundsz = create("Sound")({
+		Parent = Root,
+		SoundId = "rbxassetid://139997825",
+		Volume = 1.1,
+		PlaybackSpeed = 1.4,
+		MaxDistance = 66666666
+	})
+	soundsz:Play()
+	while hit == nil do
+		swait()
+		Torso.Velocity = Root.CFrame.lookVector * 130 + Vector3.new(0, -1, 0) * 130
+		effect(e, color, CFrame.new(Cube.Position) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 11, 11, 90, -0.4, -0.4, -2, 0.03, "Sphere", 4, -3)
+		effect(e, color, CFrame.new(Cube.Position) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 22, 22, 70, -0.4, -0.4, 0, 0.02, "Sphere", 8)
+		effect(e, color, Cube.CFrame, 1, 1, 1, 2.5, 2.5, 2.5, 0.08, "Brick", 1, 0, "", Cube)
+		effect(e, color, Cube.CFrame, 1, 1, 1, 2, 2, 2, 0.07, "Brick", 1, 0, "")
+		hit, pos = rayCast(Cube.Position, CFrame.new(Cube.Position, Cube.Position - Vector3.new(0, 1, 0)).lookVector, 4, chr)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, -3.5, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.4)
+	end
+	soundsz:Remove()
+	local refasdc = parts(e, "ref", Vector3.new(0.1, 0.1, 0.1), "Really black", Enum.Material.Neon, 0, 0.5)
+	refasdc.CFrame = CFrame.new(Cube.Position)
+	refasdc.Anchored = true
+	local as = Cube.CFrame:toObjectSpace(refasdc.CFrame):inverse()
+	CubeWeld.C0 = as
+	CubeWeld.Part0 = refasdc
+	sounds(chr, "1196176156", 2, 0.7)
+	sounds(chr, "413503439", 2, 0.6)
+	sounds(chr, "1066991958", 2, 0.7)
+	sounds(chr, "166218031", 3, 0.6)
+	local soundszs = create("Sound")({
+		Parent = chr,
+		SoundId = "rbxassetid://990112492",
+		Looped = true,
+		Volume = 1.8,
+		PlaybackSpeed = 1,
+		MaxDistance = 66666666
+	})
+	soundszs:Play()
+	coroutine.resume(coroutine.create(function()
+		for i = 1, 25 do
+			effect(e, color, CFrame.new(refasdc.Position) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 45, 45, 180, -2, -2, 4, 0.005, "Sphere", 4, -4.5)
+		end
+		effect(e, color, refasdc.CFrame, 15, 15, 15, 25, 25, 25, 0.003, "Brick", 1, 0, "")
+		effect(e, color, refasdc.CFrame, 15, 15, 15, 25, 25, 25, 0.003, "Brick", 1, 0, "")
+		effect(e, color, refasdc.CFrame, 14, 14, 14, 25, 25, 25, 0.0028, "Sphere", 1, 0, "")
+		local ghl = 1000
+		Mdamage("None", refasdc, 220, math.random(50, 70), 0, "")
+		for i = 1, 250 do
+			swait(2)
+			ghl = ghl + 5
+			effect(e, color, refasdc.CFrame, ghl, ghl, ghl, -30, -30, -30, -0.02, "Sphere", 5, 0, "")
+			if ghl <= 2000 then
+				Mdamage("None", refasdc, ghl / 9.98, math.random(1, 2), 0, "")
+				effect(e, color, CFrame.new(refasdc.Position) * CFrame.Angles(0, math.rad(-360, 360), 0), 9, 3, 9, 15, 2, 15, 0.03, "FileMesh", 2, math.random(-15, 15), "20329976")
+				effect(e, color, refasdc.CFrame * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 5, 5, 1, 21, 21, 2, 0.028, "FileMesh", 7, 0, "3270017")
+				CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.4)
+			end
+		end
+		soundszs:Remove()
+		effect(e, color, refasdc.CFrame, 105, 105, 105, 155, 155, 155, 0.003, "Brick", 1, 0, "")
+		effect(e, color, refasdc.CFrame, 105, 105, 105, 155, 155, 155, 0.003, "Brick", 1, 0, "")
+		effect(e, color, refasdc.CFrame, 102, 102, 102, 155, 155, 155, 0.0028, "Sphere", 1, 0, "")
+		sounds(chr, "202957303", 3, 0.6)
+		sounds(chr, "1070667583", 3, 0.14)
+		Mdamage("None", refasdc, 520, 30, 0, "")
+		for i = 1, 200 do
+			swait()
+			effect(e, "Really black", CFrame.new(refasdc.Position + Vector3.new(math.random(-500, 500), 0, math.random(-500, 500))), 400, 400, 400, -12, -12, -12, 0.03, "Sphere", 7)
+			effect(e, "Really black", CFrame.new(refasdc.Position) * CFrame.new(math.random(-500, 500), math.random(-500, 500), math.random(-500, 500)) * CFrame.Angles(math.rad(90), 0, 0), 150, 150, 550, -7, -7, 30, 0.03, "Sphere", 4, -13)
+			effect(e, "Really black", CFrame.new(refasdc.Position) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 40, 40, 300, 0, 0, 0, 0.005, "Sphere", 8)
+			CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(doe * 4), math.rad(doe * 4), math.rad(doe * 4)), 0.4)
+		end
+		game:GetService("Debris"):AddItem(refasdc, 25)
+		as = Cube.CFrame:toObjectSpace(Root.CFrame):inverse()
+		CubeWeld.C0 = as
+		CubeWeld.Part0 = Root
+		ea = false
+		while refasdc.Parent ~= nil do
+			swait()
+			effect(e, "Really black", CFrame.new(refasdc.Position + Vector3.new(math.random(-500, 500), 0, math.random(-500, 500))), 130, 130, 130, -9, -9, -9, 0.05, "Sphere", 7)
+			effect(e, "Really black", CFrame.new(refasdc.Position) * CFrame.new(math.random(-500, 500), math.random(-500, 500), math.random(-500, 500)) * CFrame.Angles(math.rad(90), 0, 0), 60, 60, 320, -2.5, -2.5, 20, 0.03, "Sphere", 4, -13)
+		end
+	end))
+	swait()
+	hum.Jump = true
+	Torso.Velocity = Root.CFrame.lookVector * 260 + Vector3.new(0, 1, 0) * 200
+	for i = 0, 1, 0.04 do
+		swait()
+		RJ.C0 = clerp(RJ.C0, CFrame.new(4.86139811E-7, -0.140436232, 0.347435653, 1, 1.49779016E-8, 2.07212487E-8, 3.6266381E-9, 0.719157219, -0.694847345, -2.53091912E-8, 0.694847345, 0.719157219) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0 - 360 * i), 0, 0), 0.4)
+		Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.56305528, -0.257416815, 1, 0, 0, 0, 0.889561772, 0.456814885, 0, -0.456814885, 0.889561832) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RS.C0 = clerp(RS.C0, CFrame.new(1.57813752, 0.974923313, -0.0414462686, 0.944944143, -0.327231765, -1.90215701E-6, -0.322248161, -0.930552185, -0.173864692, 0.0568922907, 0.164292991, -0.984769583) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LS.C0 = clerp(LS.C0, CFrame.new(-1.65801013, 1.06233311, -0.139169589, 0.912198901, 0.385365069, 0.139236882, 0.398512214, -0.913422823, -0.0827451348, 0.0952950418, 0.130967587, -0.986796021) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		RH.C0 = clerp(RH.C0, CFrame.new(0.500015259, -0.911290526, -0.474949211, 1, 0, 0, 0, 0.916592062, 0.399823666, 0, -0.399823695, 0.916592062) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		LH.C0 = clerp(LH.C0, CFrame.new(-0.500022888, -1.99482846, -0.0717773512, 1, 0, 0, 0, 0.997329473, -0.0730338395, 0, 0.0730338395, 0.997329473) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+	end
+	attack = false
+	hum.WalkSpeed = Speedz.Value
+	hum.JumpPower = Jumpz.Value
+end
+function m()
+	if coloriz == 1 then
+		soundasd.SoundId = "rbxassetid://227551982"
+		coloriz = 2
+		soundasd.TimePosition = sp2.Value
+	else
+		soundasd.SoundId = "rbxassetid://1347011178"
+		coloriz = 1
+		soundasd.TimePosition = sp1.Value
+	end
+end
+mouse.Button1Down:connect(function()
+	if attack == false then
+		What()
+	end
+end)
+mouse.KeyDown:connect(function(k)
+	k = k:lower()
+	if attack == false and ea == false then
+		if k == "z" then
+			idk1()
+		elseif k == "x" then
+			if coloriz == 1 then
+				idk2()
+			else
+				idk3()
+			end
+		elseif k == "c" then
+			if coloriz == 1 then
+				idk4()
+			else
+				idk5()
+			end
+		elseif k == "v" then
+			if coloriz == 1 then
+				idk6()
+			elseif coloriz == 2 then
+				idk7()
+			end
+		elseif k == "f" then
+			m()
+		end
+	end
+	if k == "k" then
+		plr:LoadCharacter()
+	end
+end)
+doe = 0
+while chr.Humanoid.Health >= 0 do
+	swait()
+	sin = sin + cha
+	doe = doe + 1
+	Efect.Color = ColorSequence.new(BrickColor.new(color).Color)
+	effect(e, color2, CFrame.new(Cube.Position + Vector3.new(math.random(-2, 2) / 1.5, math.random(-2, 2) / 1.5, math.random(-2, 2) / 1.5)), 2, 2, 2, -0.03, -0.03, -0.03, 0.04, "Sphere", 7)
+	effect(e, color, CFrame.new(Root.Position + Vector3.new(math.random(-10, 10) / 1.5, -3, math.random(-10, 10) / 1.5)) * CFrame.Angles(math.rad(90), math.rad(math.random(-30, 30)), math.rad(math.random(-360, 360))), 2, 2, 7, 0, 0, 0.1, math.random(40, 60) / 1000, "Sphere", 4, -0.9)
+	Trail.Color = ColorSequence.new(BrickColor.new(color).Color)
+	for _, ss in pairs(chr.WModel:children()) do
+		if ss:IsA("Part") then
+			if ss.Name == "Cube" then
+				ss.BrickColor = BrickColor.new(color)
+				if coloriz == 1 then
+					ss.Material = "Neon"
+				else
+					ss.Material = "SmoothPlastic"
+				end
+			elseif ss.Name == "Part" then
+				ss.BrickColor = BrickColor.new(color2)
+				if coloriz == 1 then
+					ss.Material = "SmoothPlastic"
+				else
+					ss.Material = "Neon"
+				end
+			end
+		end
+	end
+	if coloriz == 1 then
+		color = "Institutional white"
+		color2 = "Really black"
+		sp1.Value = soundasd.TimePosition
+		Trail.LightEmission = 1
+		Efect.LightEmission = 1
+		Efect.LightInfluence = 1
+	else
+		color = "Really black"
+		color2 = "Institutional white"
+		sp2.Value = soundasd.TimePosition
+		Trail.LightEmission = 0
+		Efect.LightEmission = 0
+		Efect.LightInfluence = 1
+	end
+	if attack == false and ea == false then
+		CubeWeld.Part0 = main
+		mainWeld.C0 = clerp(mainWeld.C0, CFrame.Angles(math.rad(doe / 2), -math.rad(doe), 0), 0.1)
+		CubeWeld.C0 = clerp(CubeWeld.C0, CFrame.new(0, 0 + 0.8 * math.cos(sin / 25), 5) * CFrame.Angles(math.rad(doe * 2), math.rad(doe * 2), math.rad(doe * 2)), 0.1)
+	end
+	if attack == false then
+		Speedz.Value = hum.WalkSpeed
+		Jumpz.Value = hum.JumpPower
+	end
+	an.CFrame = clerp(an.CFrame, Root.CFrame, 0.4)
+	local torvel = (Root.Velocity * Vector3.new(1, 0, 1)).magnitude
+	local velderp = Root.Velocity.y
+	hitfloor, posfloor = rayCast(Root.Position, CFrame.new(Root.Position, Root.Position - Vector3.new(0, 1, 0)).lookVector, 4, chr)
+	if Root.Velocity.y > 1 and hitfloor == nil then
+		Pose = "Jump"
+		if attack == false then
+			RJ.C0 = clerp(RJ.C0, CFrame.new(1.27942856E-9, -0.0025275033, 0.0501897596, 1, -1.06778786E-9, 2.55454005E-8, 3.6266381E-9, 0.994949162, -0.100379847, -2.53091912E-8, 0.100379847, 0.994949162) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.46451819, 0.136381671, 1, 0, 0, 0, 0.96773237, -0.251980543, 0, 0.251980543, 0.96773237) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			RS.C0 = clerp(RS.C0, CFrame.new(1.60655272, 0.140721351, -2.50170851E-5, 0.967689216, -0.252146065, 4.00024828E-6, 0.252146035, 0.967689216, -3.4570694E-6, -3.00072134E-6, 4.35858965E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			LS.C0 = clerp(LS.C0, CFrame.new(-1.60588777, 0.182476342, 3.46600791E-6, 0.912787139, 0.408435762, -5.3364829E-6, -0.408435732, 0.91278708, -2.41473317E-5, -4.991889E-6, 2.42218375E-5, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			RH.C0 = clerp(RH.C0, CFrame.new(0.500007629, -2.04610825, 0.225123167, 1, 0, 0, 0, 0.968374431, 0.249501422, 0, -0.249501422, 0.968374431) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			LH.C0 = clerp(LH.C0, CFrame.new(-0.543848097, -1.17281246, -0.246499091, 0.99947387, 0.0324356109, 3.94547556E-7, -0.0310850926, 0.957855463, 0.285563946, 0.00926206261, -0.285413712, 0.958359659) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		end
+	elseif Root.Velocity.y < -1 and hitfloor == nil then
+		Pose = "Fall"
+		if attack == false then
+			RJ.C0 = clerp(RJ.C0, CFrame.new(-1.57214874E-9, -0.00394520955, -0.0626830235, 1, -6.77076795E-9, 2.46549074E-8, 3.6266381E-9, 0.992111564, 0.125359133, -2.53091912E-8, -0.125359133, 0.992111564) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.48736167, -0.0897237733, 1, 0, 0, 0, 0.990185618, 0.139759049, 0, -0.139759049, 0.990185618) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			RS.C0 = clerp(RS.C0, CFrame.new(1.99191153, 0.299519837, -2.90675544E-5, 0.348972917, -0.937132835, 3.28018018E-6, 0.937132895, 0.348972917, -1.19954348E-6, -2.23517418E-8, 3.4943223E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			LS.C0 = clerp(LS.C0, CFrame.new(-1.94260418, 0.2686975, 1.05297477E-6, 0.379365772, 0.925246775, 5.20263848E-6, -0.925246835, 0.379365802, 1.75833702E-6, -3.50177288E-7, -5.47990203E-6, 1) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			RH.C0 = clerp(RH.C0, CFrame.new(0.592183411, -1.99607348, 0.139463156, 0.998291373, -0.0584319942, -6.27775648E-7, 0.0578798018, 0.988855958, 0.137164503, -0.0080141779, -0.136930227, 0.990548432) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+			LH.C0 = clerp(LH.C0, CFrame.new(-0.623786151, -1.98371971, 0.0530021489, 0.988599002, 0.150572151, 6.86675548E-7, -0.150271952, 0.986627817, 0.0631203875, 0.00950349495, -0.0624008626, 0.998005986) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0, 0), 0.4)
+		end
+	elseif torvel < 1 and hitfloor ~= nil then
+		Pose = "Idle"
+		if attack == false then
+			RJ.C0 = clerp(RJ.C0, CFrame.new(-1.48955287E-5, -2.18424718E-7, -1.9992558E-7, 0.759560168, -3.62740549E-9, -0.650437176, 1.97231857E-5, 1, 2.3026545E-5, 0.650437176, -3.03187353E-5, 0.759560168) * CFrame.new(0, -0.1 - 0.06 * math.sin(sin / 30), 0) * CFrame.Angles(0, 0, 0), 0.3)
+			Neck.C0 = clerp(Neck.C0, CFrame.new(4.11753426E-5, 1.50003028, 2.46156305E-5, 0.759560168, 1.97231857E-5, 0.650437176, -3.62740549E-9, 1, -3.03187353E-5, -0.650437176, 2.3026545E-5, 0.759560168) * CFrame.new(0, 0, 0 - 0.04 * math.cos(sin / 30)) * CFrame.Angles(math.rad(0 - 3 * math.cos(sin / 30) + -math.sin(sin / 30) / 15), 0, 0), 0.3)
+			RS.C0 = clerp(RS.C0, CFrame.new(1.60886788, 0.147572607, 0.0241732541, 0.956547022, -0.291191816, 0.0150125921, 0.291296065, 0.956618607, -0.00525253173, -0.0128318071, 0.0093973875, 0.999873638) * CFrame.new(0 + 0.05 * math.cos(sin / 30), 0 - 0.02 * math.sin(sin / 30) / 15, 0) * CFrame.Angles(math.rad(0 + 4 * math.cos(sin / 30) + -math.sin(sin / 30) / 15), 0, math.rad(0 + 6 * math.cos(sin / 30) + -math.sin(sin / 30) / 15)), 0.3)
+			LS.C0 = clerp(LS.C0, CFrame.new(-1.65226853, 0.0837563872, -0.146504939, 0.902591765, 0.422802925, 0.0810301006, -0.38555494, 0.877647758, -0.284748733, -0.191508502, 0.225770324, 0.955171466) * CFrame.new(0 - 0.05 * math.cos(sin / 30), 0 - 0.02 * math.sin(sin / 30) / 15, 0) * CFrame.Angles(0, 0, math.rad(0 - 6 * math.cos(sin / 30) + -math.sin(sin / 30) / 15)), 0.3)
+			RH.C0 = clerp(RH.C0, CFrame.new(0.500002801, -2.00008392, -5.31971455E-5, 0.768913567, 0, 0.639352918, 0, 1, 0, -0.639352918, 0, 0.768913567) * CFrame.new(0, 0.1 + 0.06 * math.sin(sin / 30), 0) * CFrame.Angles(0, 0, 0), 0.3)
+			LH.C0 = clerp(LH.C0, CFrame.new(-0.500041127, -2.00008202, -6.22719526E-5, 0.785863101, 0, 0.618400753, 0, 1, 0, -0.618400753, 0, 0.785863101) * CFrame.new(0, 0.1 + 0.06 * math.sin(sin / 30), 0) * CFrame.Angles(0, 0, 0), 0.3)
+		end
+	elseif torvel > 2 and torvel < 45 and hitfloor ~= nil then
+		Pose = "Walk"
+		if attack == false then
+			RJ.C0 = clerp(RJ.C0, CFrame.new(-3.99348421E-9, -0.0268486161, -0.161635131, 1, -1.16135119E-8, 2.27779307E-8, 3.6266381E-9, 0.946308315, 0.323265731, -2.53091912E-8, -0.323265731, 0.946308315) * CFrame.new(0, -0.3 - 0.08 * math.sin(sin / 3.5), 0) * CFrame.Angles(0, math.rad(0 + 7 * math.cos(sin / 7) + -math.sin(sin / 7) / 15) + Root.RotVelocity.Y / 15, 0), 0.3)
+			Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.49165225, 0.0629501939, 1, 0, 0, 0, 0.991282046, -0.131758034, 0, 0.131758034, 0.991282046) * CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0 - 2 * math.cos(sin / 3.5) + -math.sin(sin / 3.5) / 15), 0 + Head.RotVelocity.Y / 20, 0), 0.3)
+			RS.C0 = clerp(RS.C0, CFrame.new(1.46631267, 0.0749171525, -2.33450191E-5 + 0.3 * math.cos(sin / 7), 0.982963741, -0.183800012, -2.96562575E-6, 0.183800027, 0.982963681, 4.44054604E-6, 2.09733844E-6, -4.91738319E-6, 1.00000012) * CFrame.new(0 + 0.08 * math.cos(sin / 3.5), 0, 0 + 0.7 * math.cos(sin / 7)) * CFrame.Angles(math.rad(0 - 80 * math.cos(sin / 7) + -math.sin(sin / 7) / 15), 0, math.rad(0 + 15 * math.cos(sin / 3.5) + -math.sin(sin / 3.5) / 15)), 0.3)
+			LS.C0 = clerp(LS.C0, CFrame.new(-1.48350062, 0.0571329743, -1.65494157E-7 - 0.3 * math.cos(sin / 7), 0.982625127, 0.185601696, 1.50684855E-6, -0.185601696, 0.982625186, -5.27501106E-6, -2.46241689E-6, 4.88758087E-6, 1.00000012) * CFrame.new(0 - 0.08 * math.cos(sin / 3.5), 0, 0 - 0.7 * math.cos(sin / 7)) * CFrame.Angles(math.rad(0 + 80 * math.cos(sin / 7) + -math.sin(sin / 7) / 15), 0, math.rad(0 - 15 * math.cos(sin / 3.5) + -math.sin(sin / 3.5) / 15)), 0.3)
+			RH.C0 = clerp(RH.C0, CFrame.new(0.500011444, -2.00007749, 1.90734886E-6 - 0.4 * math.cos(sin / 7), 1, 0, 0, 0, 1.00000012, 0, 0, 0, 1.00000012) * CFrame.new(0, 0.3 + 0.08 * math.sin(sin / 3.5), 0 - 0.5 * math.cos(sin / 7)) * CFrame.Angles(math.rad(0 + 75 * math.cos(sin / 7) + -math.sin(sin / 7) / 15), 0, 0), 0.3)
+			LH.C0 = clerp(LH.C0, CFrame.new(-0.500023842, -2.00007463, 4.76837215E-7 + 0.4 * math.cos(sin / 7), 1, 0, 0, 0, 1.00000012, 0, 0, 0, 1.00000012) * CFrame.new(0, 0.3 + 0.08 * math.sin(sin / 3.5), 0 + 0.5 * math.cos(sin / 7)) * CFrame.Angles(math.rad(0 - 75 * math.cos(sin / 7) + -math.sin(sin / 7) / 15), 0, 0), 0.3)
+		end
+	elseif torvel >= 45 and hitfloor ~= nil then
+		Pose = "Run"
+		if attack == false then
+			RJ.C0 = clerp(RJ.C0, CFrame.new(-1.91203708E-6, -0.264509153 - 0.1 * math.sin(sin / 2.5), -0.266138256, 1, -1.65417475E-8, 1.9495598E-8, 3.6266381E-9, 0.846569121, 0.532278895, -2.53091912E-8, -0.532278895, 0.846569121) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0 + Root.RotVelocity.Y / 15, 0), 0.3)
+			Neck.C0 = clerp(Neck.C0, CFrame.new(0, 1.46416557, 0.140323952, 1, 0, 0, 0, 0.96886307, -0.247597575, 0, 0.247597605, 0.968862951) * CFrame.new(0, 0, 0) * CFrame.Angles(0, 0 + Head.RotVelocity.Y / 20, 0), 0.3)
+			RS.C0 = clerp(RS.C0, CFrame.new(1.51737642, 0.238751292, 0.633444786, 0.963849127, -0.20280613, -0.172813848, 0.249956518, 0.463580012, 0.850067914, -0.0922859237, -0.862533152, 0.49751392) * CFrame.new(0, 0, 0 - 0.1 * math.cos(sin / 2.5)) * CFrame.Angles(math.rad(0 + 12 * math.cos(sin / 2.5) + -math.sin(sin / 2.5) / 15), 0 + RArm.RotVelocity.Y / 20, 0), 0.3)
+			LS.C0 = clerp(LS.C0, CFrame.new(-1.69293177, 0.343249738, 0.59140259, 0.924847662, 0.338680565, 0.173067346, -0.334475517, 0.507624805, 0.794004679, 0.181060612, -0.792220056, 0.582756042) * CFrame.new(0, 0, 0 - 0.1 * math.cos(sin / 2.5)) * CFrame.Angles(math.rad(0 + 12 * math.cos(sin / 2.5) + -math.sin(sin / 2.5) / 15), 0 + LArm.RotVelocity.Y / 20, 0), 0.3)
+			RH.C0 = clerp(RH.C0, CFrame.new(0.500011444, -1.60007749, 1.90734886E-6 - 0.4 * math.cos(sin / 5), 1, 0, 0, 0, 1.00000012, 0, 0, 0, 1.00000012) * CFrame.new(0, 0 + 0.1 * math.sin(sin / 2.5), 0 - 0.5 * math.cos(sin / 5)) * CFrame.Angles(math.rad(0 + 75 * math.cos(sin / 5) + -math.sin(sin / 5) / 15), 0, 0), 0.3)
+			LH.C0 = clerp(LH.C0, CFrame.new(-0.500023842, -1.60007463, 4.76837215E-7 + 0.4 * math.cos(sin / 5), 1, 0, 0, 0, 1.00000012, 0, 0, 0, 1.00000012) * CFrame.new(0, 0 + 0.1 * math.sin(sin / 2.5), 0 + 0.5 * math.cos(sin / 5)) * CFrame.Angles(math.rad(0 - 75 * math.cos(sin / 5) + -math.sin(sin / 5) / 15), 0, 0), 0.3)
+			effect(e, color, CFrame.new(RLeg.Position + Vector3.new(0, -1, 0)) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 3, 3, 28, 0.2, 0.2, 0.2, 0.04, "Sphere", 8)
+			effect(e, color, CFrame.new(LLeg.Position + Vector3.new(0, -1, 0)) * CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360))), 3, 3, 28, 0.2, 0.2, 0.2, 0.04, "Sphere", 8)
+		end
+	end
+	if #crosses > 0 then
+		for bb = 1, #crosses do
+			if crosses[bb] ~= nil then
+				local cccz = crosses[bb]
+				if cccz ~= nil then
+					local croo = cccz[1]
+					local modol = cccz[2]
+					local look = cccz[3]
+					local posit = cccz[4]
+					local times = cccz[5]
+					local ex = cccz[6]
+					local trail = cccz[7]
+					local hit, pos = rayCast(cccz[4], cccz[3], 20, chr)
+					croo.CFrame = CFrame.new((cccz[4] + pos) / 2, pos)
+					cccz[4] = cccz[4] + look * 5
+					cccz[5] = cccz[5] - 1
+					cccz[7].Enabled = true
+					if hit ~= nil then
+						cccz[5] = 0
+					end
+					if cccz[5] <= 0 then
+						cccz[6].Parent = e
+						do
+							local reeef = parts(e, "reeef", Vector3.new(0.200000003, 0.200000003, 0.200000003), "Institutional white", Enum.Material.SmoothPlastic, 0, 1)
+							reeef.Anchored = true
+							reeef.CFrame = CFrame.new(cccz[4])
+							sounds(reeef, "622400652", 1.2, 1.1)
+							sounds(reeef, "171378971", 1.2, 1)
+							effect(e, color, CFrame.new(reeef.Position), 12, 12, 12, 16, 16, 16, 0.04, "Brick", 1, 0, "")
+							effect(e, color, CFrame.new(reeef.Position), 12, 12, 12, 16, 16, 16, 0.04, "Brick", 1, 0, "")
+							effect(e, color, CFrame.new(reeef.Position), 12, 12, 12, 15, 15, 15, 0.03, "Sphere", 7, 0, "")
+							Mdamage("None", reeef, 38, math.random(3, 5), 0, "")
+							local ree = Efect:Clone()
+							ree.Parent = reeef
+							ree.VelocitySpread = 1000
+							ree.Rate = 2000
+							ree.Speed = NumberRange.new(180)
+							ree.Enabled = true
+							ree.Lifetime = NumberRange.new(0.3, 0.6)
+							ree.Size = NumberSequence.new({
+								NumberSequenceKeypoint.new(0, 20),
+								NumberSequenceKeypoint.new(1, 5)
+							})
+							local ree2 = Efect:Clone()
+							ree2.Parent = reeef
+							ree2.VelocitySpread = 1000
+							ree2.Rate = 120
+							ree2.Speed = NumberRange.new(50)
+							ree2.Texture = "rbxassetid://243660364"
+							ree2.Enabled = true
+							ree2.Lifetime = NumberRange.new(0.7, 1.5)
+							ree2.Size = NumberSequence.new({
+								NumberSequenceKeypoint.new(0, 28),
+								NumberSequenceKeypoint.new(1, 28)
+							})
+							local ree3 = ree:Clone()
+							ree3.Parent = reeef
+							local ree4 = ree:Clone()
+							ree4.Parent = reeef
+							coroutine.resume(coroutine.create(function()
+								swait(2)
+								ree.Enabled = false
+								ree3.Enabled = false
+								ree4.Enabled = false
+								swait(10)
+								ree2.Enabled = false
+							end))
+							cccz[6].Anchored = true
+							game:GetService("Debris"):AddItem(reeef, 5)
+							game:GetService("Debris"):AddItem(cccz[6], 4)
+							modol:Remove()
+							table.remove(crosses, bb)
+						end
+					end
+				end
+			end
+		end
+	end
+end
+warn("ok")
